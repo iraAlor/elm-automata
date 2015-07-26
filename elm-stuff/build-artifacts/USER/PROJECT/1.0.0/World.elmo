@@ -1,0 +1,596 @@
+Elm.World = Elm.World || {};
+Elm.World.make = function (_elm) {
+   "use strict";
+   _elm.World = _elm.World || {};
+   if (_elm.World.values)
+   return _elm.World.values;
+   var _op = {},
+   _N = Elm.Native,
+   _U = _N.Utils.make(_elm),
+   _L = _N.List.make(_elm),
+   $moduleName = "World",
+   $Basics = Elm.Basics.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Signal = Elm.Signal.make(_elm),
+   $String = Elm.String.make(_elm),
+   $UI = Elm.UI.make(_elm);
+   var init = {ctor: "_Tuple2"
+              ,_0: _L.fromArray([])
+              ,_1: _L.fromArray([])};
+   var listPatt = F3(function (comp,
+   el,
+   _v0) {
+      return function () {
+         switch (_v0.ctor)
+         {case "_Tuple2":
+            return function () {
+                 switch (_v0._0.ctor)
+                 {case "Nothing":
+                    return comp(el) ? {ctor: "_Tuple2"
+                                      ,_0: $Maybe.Just(el)
+                                      ,_1: _v0._1} : {ctor: "_Tuple2"
+                                                     ,_0: _v0._0
+                                                     ,_1: A2($List._op["::"],
+                                                     el,
+                                                     _v0._1)};}
+                 return {ctor: "_Tuple2"
+                        ,_0: _v0._0
+                        ,_1: A2($List._op["::"],
+                        el,
+                        _v0._1)};
+              }();}
+         _U.badCase($moduleName,
+         "between lines 75 and 77");
+      }();
+   });
+   var addPatt = F6(function (comp,
+   build,
+   up,
+   ins,
+   state,
+   sub) {
+      return function () {
+         var base = build(sub);
+         var $ = A3($List.foldl,
+         listPatt(comp(base)),
+         {ctor: "_Tuple2"
+         ,_0: $Maybe.Nothing
+         ,_1: _L.fromArray([])},
+         state),
+         e = $._0,
+         nls = $._1;
+         return function () {
+            switch (e.ctor)
+            {case "Just": return A3(up,
+                 base,
+                 e._0,
+                 nls);
+               case "Nothing": return A2(ins,
+                 base,
+                 nls);}
+            _U.badCase($moduleName,
+            "between lines 81 and 83");
+         }();
+      }();
+   });
+   var delItem = F2(function (cmp,
+   ls) {
+      return function () {
+         var _ = A3($List.foldl,
+         listPatt(cmp),
+         {ctor: "_Tuple2"
+         ,_0: $Maybe.Nothing
+         ,_1: _L.fromArray([])},
+         ls);
+         var acc = function () {
+            switch (_.ctor)
+            {case "_Tuple2": return _._1;}
+            _U.badCase($moduleName,
+            "on line 90, column 33 to 76");
+         }();
+         return acc;
+      }();
+   });
+   var insE = F3(function (nodes,
+   ed,
+   ls) {
+      return function () {
+         var $ = ed.route,
+         n0 = $._0,
+         n1 = $._1;
+         var $ = A3($List.foldl,
+         F2(function (el,_v10) {
+            return function () {
+               switch (_v10.ctor)
+               {case "_Tuple2":
+                  return {ctor: "_Tuple2"
+                         ,_0: _v10._0 || _U.eq(el.name,
+                         n0)
+                         ,_1: _v10._1 || _U.eq(el.name,
+                         n1)};}
+               _U.badCase($moduleName,
+               "on line 71, column 62 to 93");
+            }();
+         }),
+         {ctor: "_Tuple2"
+         ,_0: false
+         ,_1: false},
+         nodes),
+         r1 = $._0,
+         r2 = $._1;
+         return r1 && r2 ? A2($List._op["::"],
+         ed,
+         ls) : ls;
+      }();
+   });
+   var upEdge = F3(function (e0,
+   e1,
+   ls) {
+      return A2($List._op["::"],
+      _U.replace([["token"
+                  ,A2($Basics._op["++"],
+                  e1.token,
+                  e0.token)]],
+      e1),
+      ls);
+   });
+   var upNode = F3(function (n0,
+   n1,
+   ls) {
+      return A2($List._op["::"],
+      n1,
+      ls);
+   });
+   var compNode = F2(function (n0,
+   n1) {
+      return _U.eq(n0.name,
+      n1.name);
+   });
+   var compEdge = F2(function (e0,
+   e1) {
+      return _U.eq(e0.route,
+      e1.route);
+   });
+   var conHelp = F2(function (el,
+   _v14) {
+      return function () {
+         switch (_v14.ctor)
+         {case "_Tuple3":
+            switch (_v14._0.ctor)
+              {case "_Tuple2":
+                 return function () {
+                      var _v21 = {ctor: "_Tuple3"
+                                 ,_0: _U.eq(el,
+                                 _U.chr("(")) || _U.eq(el,
+                                 _U.chr(")"))
+                                 ,_1: el
+                                 ,_2: _U.cmp(_v14._2,1) < 0};
+                      switch (_v21.ctor)
+                      {case "_Tuple3":
+                         switch (_v21._0)
+                           {case true:
+                              return {ctor: "_Tuple3"
+                                     ,_0: {ctor: "_Tuple2"
+                                          ,_0: _v14._0._0
+                                          ,_1: _v14._0._1}
+                                     ,_1: _v14._1
+                                     ,_2: _v14._2};}
+                           switch (_v21._1 + "")
+                           {case ",": switch (_v21._2)
+                                {case false:
+                                   return {ctor: "_Tuple3"
+                                          ,_0: {ctor: "_Tuple2"
+                                               ,_0: _v14._0._0
+                                               ,_1: _v14._0._1}
+                                          ,_1: _v14._1
+                                          ,_2: _v14._2 + 1};}
+                                break;}
+                           switch (_v21._2)
+                           {case true:
+                              return _U.eq(_v14._2,
+                                0) ? {ctor: "_Tuple3"
+                                     ,_0: {ctor: "_Tuple2"
+                                          ,_0: A2($String.cons,el,"")
+                                          ,_1: _v14._0._1}
+                                     ,_1: _v14._1
+                                     ,_2: _v14._2} : {ctor: "_Tuple3"
+                                                     ,_0: {ctor: "_Tuple2"
+                                                          ,_0: _v14._0._0
+                                                          ,_1: A2($String.cons,
+                                                          el,
+                                                          "")}
+                                                     ,_1: _v14._1
+                                                     ,_2: _v14._2};}
+                           return {ctor: "_Tuple3"
+                                  ,_0: {ctor: "_Tuple2"
+                                       ,_0: _v14._0._0
+                                       ,_1: _v14._0._1}
+                                  ,_1: A2($String.cons,el,_v14._1)
+                                  ,_2: _v14._2};}
+                      _U.badCase($moduleName,
+                      "between lines 50 and 55");
+                   }();}
+              break;}
+         _U.badCase($moduleName,
+         "between lines 50 and 55");
+      }();
+   });
+   var convertToE = function (str) {
+      return function () {
+         var _ = A3($String.foldl,
+         conHelp,
+         {ctor: "_Tuple3"
+         ,_0: {ctor: "_Tuple2"
+              ,_0: ""
+              ,_1: ""}
+         ,_1: ""
+         ,_2: 0},
+         str);
+         var r = function () {
+            switch (_.ctor)
+            {case "_Tuple3": return _._0;}
+            _U.badCase($moduleName,
+            "on line 56, column 34 to 73");
+         }();
+         var tk = function () {
+            switch (_.ctor)
+            {case "_Tuple3": return _._1;}
+            _U.badCase($moduleName,
+            "on line 56, column 34 to 73");
+         }();
+         var ttk = A2($String.split,
+         ",",
+         $String.reverse(tk));
+         return {ctor: "_Tuple2"
+                ,_0: r
+                ,_1: ttk};
+      }();
+   };
+   var setToF = function (ls) {
+      return A2($List.map,
+      function (a) {
+         return _U.replace([["pre"
+                            ,false]],
+         a);
+      },
+      ls);
+   };
+   var rad = 20.0;
+   var contains = F2(function (_v33,
+   _v34) {
+      return function () {
+         switch (_v34.ctor)
+         {case "_Tuple2":
+            return function () {
+                 switch (_v33.ctor)
+                 {case "_Tuple2":
+                    return _U.cmp(Math.pow(_v33._0 - _v34._0,
+                      2) + Math.pow(_v33._1 - _v34._1,
+                      2),
+                      Math.pow($Basics.round(rad),
+                      2)) < 1;}
+                 _U.badCase($moduleName,
+                 "on line 28, column 29 to 66");
+              }();}
+         _U.badCase($moduleName,
+         "on line 28, column 29 to 66");
+      }();
+   });
+   var helper = F3(function (_v41,
+   el,
+   _v42) {
+      return function () {
+         switch (_v42.ctor)
+         {case "_Tuple2":
+            return function () {
+                 switch (_v41.ctor)
+                 {case "_Tuple2":
+                    return function () {
+                         switch (_v42._0.ctor)
+                         {case "Nothing":
+                            return A2(contains,
+                              {ctor: "_Tuple2"
+                              ,_0: _v41._0
+                              ,_1: _v41._1},
+                              el.coord) ? {ctor: "_Tuple2"
+                                          ,_0: $Maybe.Just(el)
+                                          ,_1: _v42._1} : {ctor: "_Tuple2"
+                                                          ,_0: _v42._0
+                                                          ,_1: A2($List._op["::"],
+                                                          el,
+                                                          _v42._1)};}
+                         return {ctor: "_Tuple2"
+                                ,_0: _v42._0
+                                ,_1: A2($List._op["::"],
+                                el,
+                                _v42._1)};
+                      }();}
+                 _U.badCase($moduleName,
+                 "between lines 32 and 34");
+              }();}
+         _U.badCase($moduleName,
+         "between lines 32 and 34");
+      }();
+   });
+   var helpy2 = F2(function (_v50,
+   node) {
+      return function () {
+         switch (_v50.ctor)
+         {case "_Tuple2":
+            return function () {
+                 var _ = {ctor: "_Tuple2"
+                         ,_0: node.pCoor
+                         ,_1: node.coord};
+                 var mx = function () {
+                    switch (_.ctor)
+                    {case "_Tuple2":
+                       switch (_._0.ctor)
+                         {case "_Tuple2":
+                            switch (_._1.ctor)
+                              {case "_Tuple2":
+                                 return _._1._0;}
+                              break;}
+                         break;}
+                    _U.badCase($moduleName,
+                    "on line 23, column 48 to 69");
+                 }();
+                 var my = function () {
+                    switch (_.ctor)
+                    {case "_Tuple2":
+                       switch (_._0.ctor)
+                         {case "_Tuple2":
+                            switch (_._1.ctor)
+                              {case "_Tuple2":
+                                 return _._1._1;}
+                              break;}
+                         break;}
+                    _U.badCase($moduleName,
+                    "on line 23, column 48 to 69");
+                 }();
+                 var px = function () {
+                    switch (_.ctor)
+                    {case "_Tuple2":
+                       switch (_._0.ctor)
+                         {case "_Tuple2":
+                            switch (_._1.ctor)
+                              {case "_Tuple2":
+                                 return _._0._0;}
+                              break;}
+                         break;}
+                    _U.badCase($moduleName,
+                    "on line 23, column 48 to 69");
+                 }();
+                 var py = function () {
+                    switch (_.ctor)
+                    {case "_Tuple2":
+                       switch (_._0.ctor)
+                         {case "_Tuple2":
+                            switch (_._1.ctor)
+                              {case "_Tuple2":
+                                 return _._0._1;}
+                              break;}
+                         break;}
+                    _U.badCase($moduleName,
+                    "on line 23, column 48 to 69");
+                 }();
+                 var $ = {ctor: "_Tuple2"
+                         ,_0: _v50._0 - px
+                         ,_1: _v50._1 - py},
+                 dx = $._0,
+                 dy = $._1;
+                 return _U.replace([["coord"
+                                    ,{ctor: "_Tuple2"
+                                     ,_0: mx + dx
+                                     ,_1: my + dy}]
+                                   ,["pre",true]
+                                   ,["pCoor"
+                                    ,{ctor: "_Tuple2"
+                                     ,_0: _v50._0
+                                     ,_1: _v50._1}]],
+                 node);
+              }();}
+         _U.badCase($moduleName,
+         "between lines 23 and 25");
+      }();
+   });
+   var find = F2(function (co,ls) {
+      return function () {
+         var $ = A3($List.foldl,
+         helper(co),
+         {ctor: "_Tuple2"
+         ,_0: $Maybe.Nothing
+         ,_1: _L.fromArray([])},
+         ls),
+         b = $._0,
+         c = $._1;
+         return function () {
+            switch (b.ctor)
+            {case "Just":
+               return b._0.pre ? {ctor: "_Tuple2"
+                                 ,_0: $Maybe.Just(A2(helpy2,
+                                 co,
+                                 b._0))
+                                 ,_1: c} : {ctor: "_Tuple2"
+                                           ,_0: $Maybe.Just(_U.replace([["pre"
+                                                                        ,true]
+                                                                       ,["pCoor"
+                                                                        ,co]],
+                                           b._0))
+                                           ,_1: c};}
+            return {ctor: "_Tuple2"
+                   ,_0: $Maybe.Nothing
+                   ,_1: c};
+         }();
+      }();
+   });
+   var helpy = F2(function (ls,
+   co) {
+      return function () {
+         var $ = A2(find,co,ls),
+         node = $._0,
+         nls = $._1;
+         return function () {
+            switch (node.ctor)
+            {case "Just":
+               return A2($List._op["::"],
+                 node._0,
+                 nls);
+               case "Nothing":
+               return setToF(nls);}
+            _U.badCase($moduleName,
+            "between lines 44 and 46");
+         }();
+      }();
+   });
+   var sEdge = {_: {}
+               ,route: {ctor: "_Tuple2"
+                       ,_0: ""
+                       ,_1: ""}
+               ,token: _L.fromArray([])};
+   var conEdge = function (strEdge) {
+      return function () {
+         var $ = convertToE(strEdge),
+         rt = $._0,
+         toks = $._1;
+         return _U.replace([["route",rt]
+                           ,["token",toks]],
+         sEdge);
+      }();
+   };
+   var addEdge = F3(function (strE,
+   state,
+   ins) {
+      return A6(addPatt,
+      compEdge,
+      conEdge,
+      upEdge,
+      F2(function (a,b) {
+         return A2($List._op["::"],
+         a,
+         b);
+      }),
+      state,
+      strE);
+   });
+   var start = {_: {}
+               ,coord: {ctor: "_Tuple2"
+                       ,_0: 10
+                       ,_1: 10}
+               ,name: ""
+               ,pCoor: {ctor: "_Tuple2"
+                       ,_0: 0
+                       ,_1: 0}
+               ,pre: false};
+   var conNode = function (na) {
+      return _U.replace([["name"
+                         ,na]],
+      start);
+   };
+   var addNode = F2(function (name,
+   state) {
+      return A6(addPatt,
+      compNode,
+      conNode,
+      upNode,
+      F2(function (a,b) {
+         return A2($List._op["::"],
+         a,
+         b);
+      }),
+      state,
+      name);
+   });
+   var updateC = F2(function (action,
+   _v86) {
+      return function () {
+         switch (_v86.ctor)
+         {case "_Tuple2":
+            return function () {
+                 switch (action.ctor)
+                 {case "DeleteEdge":
+                    return {ctor: "_Tuple2"
+                           ,_0: _v86._0
+                           ,_1: function () {
+                              var _ = convertToE(action._0);
+                              var rt = function () {
+                                 switch (_.ctor)
+                                 {case "_Tuple2": return _._0;}
+                                 _U.badCase($moduleName,
+                                 "on line 96, column 45 to 57");
+                              }();
+                              return A2(delItem,
+                              function (el) {
+                                 return _U.eq(el.route,rt);
+                              },
+                              _v86._1);
+                           }()};
+                    case "DeleteNode":
+                    return {ctor: "_Tuple2"
+                           ,_0: A2(delItem,
+                           function (el) {
+                              return _U.eq(el.name,
+                              action._0);
+                           },
+                           _v86._0)
+                           ,_1: _v86._1};
+                    case "InsertEdge":
+                    return {ctor: "_Tuple2"
+                           ,_0: _v86._0
+                           ,_1: A3(addEdge,
+                           action._0,
+                           _v86._1,
+                           _v86._0)};
+                    case "InsertNode":
+                    return {ctor: "_Tuple2"
+                           ,_0: A2(addNode,
+                           action._0,
+                           _v86._0)
+                           ,_1: _v86._1};
+                    case "Press":
+                    switch (action._0.ctor)
+                      {case "_Tuple3":
+                         switch (action._0._0.ctor)
+                           {case "_Tuple2":
+                              return {ctor: "_Tuple2"
+                                     ,_0: action._0._2 && action._0._1 ? A2(helpy,
+                                     _v86._0,
+                                     {ctor: "_Tuple2"
+                                     ,_0: action._0._0._0
+                                     ,_1: action._0._0._1}) : setToF(_v86._0)
+                                     ,_1: _v86._1};}
+                           break;}
+                      break;}
+                 _U.badCase($moduleName,
+                 "between lines 93 and 100");
+              }();}
+         _U.badCase($moduleName,
+         "between lines 93 and 100");
+      }();
+   });
+   var runner = A3($Signal.foldp,
+   updateC,
+   {ctor: "_Tuple2"
+   ,_0: _L.fromArray([])
+   ,_1: _L.fromArray([])},
+   $UI.mySig);
+   var Edge = F2(function (a,b) {
+      return {_: {}
+             ,route: a
+             ,token: b};
+   });
+   var Node = F4(function (a,
+   b,
+   c,
+   d) {
+      return {_: {}
+             ,coord: a
+             ,name: d
+             ,pCoor: c
+             ,pre: b};
+   });
+   _elm.World.values = {_op: _op
+                       ,runner: runner
+                       ,Node: Node};
+   return _elm.World.values;
+};

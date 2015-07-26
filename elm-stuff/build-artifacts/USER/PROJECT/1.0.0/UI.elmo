@@ -1,0 +1,176 @@
+Elm.UI = Elm.UI || {};
+Elm.UI.make = function (_elm) {
+   "use strict";
+   _elm.UI = _elm.UI || {};
+   if (_elm.UI.values)
+   return _elm.UI.values;
+   var _op = {},
+   _N = Elm.Native,
+   _U = _N.Utils.make(_elm),
+   _L = _N.List.make(_elm),
+   $moduleName = "UI",
+   $Basics = Elm.Basics.make(_elm),
+   $Color = Elm.Color.make(_elm),
+   $Graphics$Collage = Elm.Graphics.Collage.make(_elm),
+   $Graphics$Input = Elm.Graphics.Input.make(_elm),
+   $Graphics$Input$Field = Elm.Graphics.Input.Field.make(_elm),
+   $Mouse = Elm.Mouse.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var wrap = F2(function (ty,a) {
+      return ty(a.string);
+   });
+   var wrap0 = F3(function (tSig,
+   w,
+   sSig) {
+      return A2($Signal.sampleOn,
+      tSig,
+      A2($Signal._op["<~"],
+      wrap(w),
+      sSig));
+   });
+   var pro = F2(function (sig,
+   butt) {
+      return A2($Signal.merge,
+      A2($Signal.sampleOn,
+      butt,
+      $Signal.constant($Graphics$Input$Field.noContent)),
+      sig);
+   });
+   var boiler = F3(function (box,
+   tr,
+   mes) {
+      return A2($Signal._op["<~"],
+      A3($Graphics$Input$Field.field,
+      $Graphics$Input$Field.defaultStyle,
+      $Signal.message(box.address),
+      mes),
+      A2(pro,box.signal,tr));
+   });
+   var edgeDF = $Signal.mailbox($Graphics$Input$Field.noContent);
+   var edgeIF = $Signal.mailbox($Graphics$Input$Field.noContent);
+   var nodeDF = $Signal.mailbox($Graphics$Input$Field.noContent);
+   var nodeIF = $Signal.mailbox($Graphics$Input$Field.noContent);
+   var nodeDMan = $Signal.mailbox(false);
+   var dNField = A3(boiler,
+   nodeDF,
+   nodeDMan.signal,
+   "Remove Nodes");
+   var edgeDMan = $Signal.mailbox(false);
+   var dEField = A3(boiler,
+   edgeDF,
+   edgeDMan.signal,
+   "Remove Edges");
+   var edgeIMan = $Signal.mailbox(false);
+   var aEField = A3(boiler,
+   edgeIF,
+   edgeIMan.signal,
+   "Add Edges");
+   var nodeIMan = $Signal.mailbox(false);
+   var buttons = _L.fromArray([A2($Graphics$Input.button,
+                              A2($Signal.message,
+                              nodeIMan.address,
+                              true),
+                              "Add Node")
+                              ,A2($Graphics$Input.button,
+                              A2($Signal.message,
+                              edgeIMan.address,
+                              true),
+                              "Add Edge")
+                              ,A2($Graphics$Input.button,
+                              A2($Signal.message,
+                              edgeDMan.address,
+                              true),
+                              "Remove Edge")
+                              ,A2($Graphics$Input.button,
+                              A2($Signal.message,
+                              nodeDMan.address,
+                              true),
+                              "Remove Node")]);
+   var aNField = A3(boiler,
+   nodeIF,
+   nodeIMan.signal,
+   "Add Nodes");
+   var inside = $Signal.mailbox(false);
+   var hover = $Graphics$Input.hoverable(function (a) {
+      return a ? A2($Signal.message,
+      inside.address,
+      true) : A2($Signal.message,
+      inside.address,
+      false);
+   });
+   var background = F2(function (w,
+   h) {
+      return hover(A3($Graphics$Collage.collage,
+      w,
+      h,
+      _L.fromArray([A2($Graphics$Collage.filled,
+      $Color.red,
+      A2($Graphics$Collage.rect,
+      $Basics.toFloat(w),
+      $Basics.toFloat(h)))])));
+   });
+   var No = {ctor: "No"};
+   var Yes = {ctor: "Yes"};
+   var Press = function (a) {
+      return {ctor: "Press",_0: a};
+   };
+   var pressSig = A2($Signal._op["~"],
+   A2($Signal._op["~"],
+   A2($Signal._op["<~"],
+   F3(function (a,b,c) {
+      return Press({ctor: "_Tuple3"
+                   ,_0: a
+                   ,_1: b
+                   ,_2: c});
+   }),
+   $Mouse.position),
+   $Mouse.isDown),
+   inside.signal);
+   var DeleteEdge = function (a) {
+      return {ctor: "DeleteEdge"
+             ,_0: a};
+   };
+   var DeleteNode = function (a) {
+      return {ctor: "DeleteNode"
+             ,_0: a};
+   };
+   var InsertEdge = function (a) {
+      return {ctor: "InsertEdge"
+             ,_0: a};
+   };
+   var InsertNode = function (a) {
+      return {ctor: "InsertNode"
+             ,_0: a};
+   };
+   var mySig = $Signal.mergeMany(_L.fromArray([A3(wrap0,
+                                              nodeIMan.signal,
+                                              InsertNode,
+                                              nodeIF.signal)
+                                              ,A3(wrap0,
+                                              nodeDMan.signal,
+                                              DeleteNode,
+                                              nodeDF.signal)
+                                              ,A3(wrap0,
+                                              edgeIMan.signal,
+                                              InsertEdge,
+                                              edgeIF.signal)
+                                              ,A3(wrap0,
+                                              edgeDMan.signal,
+                                              DeleteEdge,
+                                              edgeDF.signal)
+                                              ,pressSig]));
+   _elm.UI.values = {_op: _op
+                    ,buttons: buttons
+                    ,mySig: mySig
+                    ,aNField: aNField
+                    ,dEField: dEField
+                    ,aEField: aEField
+                    ,dNField: dNField
+                    ,background: background
+                    ,InsertNode: InsertNode
+                    ,InsertEdge: InsertEdge
+                    ,DeleteEdge: DeleteEdge
+                    ,DeleteNode: DeleteNode
+                    ,Press: Press};
+   return _elm.UI.values;
+};

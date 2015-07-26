@@ -1,0 +1,120 @@
+Elm.Renderer = Elm.Renderer || {};
+Elm.Renderer.make = function (_elm) {
+   "use strict";
+   _elm.Renderer = _elm.Renderer || {};
+   if (_elm.Renderer.values)
+   return _elm.Renderer.values;
+   var _op = {},
+   _N = Elm.Native,
+   _U = _N.Utils.make(_elm),
+   _L = _N.List.make(_elm),
+   $moduleName = "Renderer",
+   $Basics = Elm.Basics.make(_elm),
+   $Color = Elm.Color.make(_elm),
+   $Graphics$Collage = Elm.Graphics.Collage.make(_elm),
+   $Graphics$Element = Elm.Graphics.Element.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Signal = Elm.Signal.make(_elm),
+   $UI = Elm.UI.make(_elm),
+   $Window = Elm.Window.make(_elm),
+   $World = Elm.World.make(_elm);
+   var scene = F2(function (_v0,
+   locs) {
+      return function () {
+         switch (_v0.ctor)
+         {case "_Tuple2":
+            return function () {
+                 var drawCircle = function (node) {
+                    return function () {
+                       var $ = node.coord,
+                       x = $._0,
+                       y = $._1;
+                       return $Graphics$Collage.rotate($Basics.toFloat(x))($Graphics$Collage.move({ctor: "_Tuple2"
+                                                                                                  ,_0: $Basics.toFloat(x) - $Basics.toFloat(_v0._0) / 2
+                                                                                                  ,_1: $Basics.toFloat(_v0._1) / 2 - $Basics.toFloat(y)})($Graphics$Collage.filled(A4($Color.hsla,
+                       $Basics.toFloat(x),
+                       0.9,
+                       0.6,
+                       0.7))($Graphics$Collage.circle(20))));
+                    }();
+                 };
+                 return $Graphics$Element.layers(_L.fromArray([A3($Graphics$Collage.collage,
+                 _v0._0,
+                 _v0._1,
+                 A2($List.map,
+                 drawCircle,
+                 locs))]));
+              }();}
+         _U.badCase($moduleName,
+         "between lines 12 and 20");
+      }();
+   });
+   var render = F6(function (_v4,
+   a,
+   b,
+   c,
+   d,
+   _v5) {
+      return function () {
+         switch (_v5.ctor)
+         {case "_Tuple2":
+            return function () {
+                 switch (_v4.ctor)
+                 {case "_Tuple2":
+                    return function () {
+                         var nodes = A2(scene,
+                         {ctor: "_Tuple2"
+                         ,_0: _v5._0
+                         ,_1: _v5._1},
+                         _v4._0);
+                         var cen = A2($Graphics$Element.flow,
+                         $Graphics$Element.outward,
+                         A2($Basics._op["++"],
+                         _L.fromArray([A2($UI.background,
+                         _v5._0,
+                         _v5._1)]),
+                         _L.fromArray([nodes])));
+                         var cont = A2($Graphics$Element.flow,
+                         $Graphics$Element.down,
+                         A3($List.map2,
+                         F2(function (el1,el2) {
+                            return A2($Graphics$Element.flow,
+                            $Graphics$Element.right,
+                            A2($Basics._op["++"],
+                            _L.fromArray([el1]),
+                            _L.fromArray([el2])));
+                         }),
+                         $UI.buttons,
+                         _L.fromArray([a,b,c,d])));
+                         return A2($Graphics$Element.flow,
+                         $Graphics$Element.down,
+                         A2($Basics._op["++"],
+                         _L.fromArray([cen]),
+                         _L.fromArray([cont])));
+                      }();}
+                 _U.badCase($moduleName,
+                 "between lines 24 and 27");
+              }();}
+         _U.badCase($moduleName,
+         "between lines 24 and 27");
+      }();
+   });
+   var main = A2($Signal._op["~"],
+   A2($Signal._op["~"],
+   A2($Signal._op["~"],
+   A2($Signal._op["~"],
+   A2($Signal._op["~"],
+   A2($Signal._op["<~"],
+   render,
+   $World.runner),
+   $UI.aNField),
+   $UI.aEField),
+   $UI.dEField),
+   $UI.dNField),
+   $Window.dimensions);
+   _elm.Renderer.values = {_op: _op
+                          ,scene: scene
+                          ,render: render
+                          ,main: main};
+   return _elm.Renderer.values;
+};
