@@ -165,7 +165,7 @@ Elm.World.make = function (_elm) {
                                  _U.chr("(")) || _U.eq(el,
                                  _U.chr(")"))
                                  ,_1: el
-                                 ,_2: _U.cmp(_v14._2,1) < 0};
+                                 ,_2: _U.cmp(_v14._2,2) < 0};
                       switch (_v21.ctor)
                       {case "_Tuple3":
                          switch (_v21._0)
@@ -178,7 +178,7 @@ Elm.World.make = function (_elm) {
                                      ,_2: _v14._2};}
                            switch (_v21._1 + "")
                            {case ",": switch (_v21._2)
-                                {case false:
+                                {case true:
                                    return {ctor: "_Tuple3"
                                           ,_0: {ctor: "_Tuple2"
                                                ,_0: _v14._0._0
@@ -256,7 +256,7 @@ Elm.World.make = function (_elm) {
       },
       ls);
    };
-   var rad = 20.0;
+   var rad = 40.0;
    var contains = F2(function (_v33,
    _v34) {
       return function () {
@@ -591,6 +591,8 @@ Elm.World.make = function (_elm) {
    });
    _elm.World.values = {_op: _op
                        ,runner: runner
-                       ,Node: Node};
+                       ,rad: rad
+                       ,Node: Node
+                       ,Edge: Edge};
    return _elm.World.values;
 };

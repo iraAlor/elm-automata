@@ -718,6 +718,186 @@ Elm.Debug.make = function (_elm) {
                        ,trace: trace};
    return _elm.Debug.values;
 };
+Elm.EdgeHelper = Elm.EdgeHelper || {};
+Elm.EdgeHelper.make = function (_elm) {
+   "use strict";
+   _elm.EdgeHelper = _elm.EdgeHelper || {};
+   if (_elm.EdgeHelper.values)
+   return _elm.EdgeHelper.values;
+   var _op = {},
+   _N = Elm.Native,
+   _U = _N.Utils.make(_elm),
+   _L = _N.List.make(_elm),
+   $moduleName = "EdgeHelper",
+   $Basics = Elm.Basics.make(_elm),
+   $Color = Elm.Color.make(_elm),
+   $Graphics$Collage = Elm.Graphics.Collage.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Text = Elm.Text.make(_elm),
+   $World = Elm.World.make(_elm);
+   var sel = function (_v0) {
+      return function () {
+         switch (_v0.ctor)
+         {case "_Tuple2":
+            return _U.cmp(_v0._0,
+              _v0._1) < 0 ? {ctor: "_Tuple4"
+                            ,_0: 0
+                            ,_1: $Basics.round(0.5 * $World.rad)
+                            ,_2: $Basics.degrees(180)
+                            ,_3: 0.125 * $World.rad} : {ctor: "_Tuple4"
+                                                       ,_0: 0
+                                                       ,_1: $Basics.round(-0.5 * $World.rad)
+                                                       ,_2: $Basics.degrees(0)
+                                                       ,_3: -0.875 * $World.rad};}
+         _U.badCase($moduleName,
+         "on line 20, column 13 to 111");
+      }();
+   };
+   var getPath = F6(function (_v4,
+   _v5,
+   a,
+   b,
+   _v6,
+   mv) {
+      return function () {
+         switch (_v6.ctor)
+         {case "_Tuple2":
+            return function () {
+                 switch (_v5.ctor)
+                 {case "_Tuple2":
+                    return function () {
+                         switch (_v4.ctor)
+                         {case "_Tuple2":
+                            return function () {
+                                 var $ = {ctor: "_Tuple2"
+                                         ,_0: $Basics.toFloat(_v5._0 - _v4._0)
+                                         ,_1: $Basics.toFloat(_v5._1 - _v4._1)},
+                                 x = $._0,
+                                 y = $._1;
+                                 var $ = $Basics.toPolar({ctor: "_Tuple2"
+                                                         ,_0: x
+                                                         ,_1: y}),
+                                 r = $._0,
+                                 t = $._1;
+                                 var $ = {ctor: "_Tuple2"
+                                         ,_0: r / 2 * $Basics.cos(t) + $Basics.toFloat(_v4._0)
+                                         ,_1: r / 2 * $Basics.sin(t) + $Basics.toFloat(_v4._1)},
+                                 mdx = $._0,
+                                 mdy = $._1;
+                                 return {ctor: "_Tuple4"
+                                        ,_0: _L.fromArray([{ctor: "_Tuple2"
+                                                           ,_0: $Basics.toFloat(_v4._0 + _v6._0) - a
+                                                           ,_1: b - $Basics.toFloat(_v4._1 + _v6._1)}
+                                                          ,{ctor: "_Tuple2"
+                                                           ,_0: $Basics.toFloat(_v5._0 + _v6._0) - a
+                                                           ,_1: b - $Basics.toFloat(_v5._1 + _v6._1)}])
+                                        ,_1: mdx + $Basics.abs(mv)
+                                        ,_2: mdy + mv
+                                        ,_3: t};
+                              }();}
+                         _U.badCase($moduleName,
+                         "between lines 16 and 19");
+                      }();}
+                 _U.badCase($moduleName,
+                 "between lines 16 and 19");
+              }();}
+         _U.badCase($moduleName,
+         "between lines 16 and 19");
+      }();
+   });
+   var belzGen = F4(function (start,
+   end,
+   cont,
+   t) {
+      return Math.pow(1 - t,
+      2) * start + 2 * (1 - t) * t * cont + t * t * end;
+   });
+   var def = {_: {}
+             ,coord: {ctor: "_Tuple2"
+                     ,_0: 10
+                     ,_1: 10}
+             ,name: ""
+             ,pCoor: {ctor: "_Tuple2"
+                     ,_0: 0
+                     ,_1: 0}
+             ,pre: false};
+   var genEdge = F3(function (nodes,
+   _v16,
+   edge) {
+      return function () {
+         switch (_v16.ctor)
+         {case "_Tuple2":
+            return function () {
+                 var $ = edge.route,
+                 start = $._0,
+                 end = $._1;
+                 var helps = F2(function (n,
+                 _v20) {
+                    return function () {
+                       switch (_v20.ctor)
+                       {case "_Tuple2":
+                          return {ctor: "_Tuple2"
+                                 ,_0: _U.eq(n.name,
+                                 start) ? n : _v20._0
+                                 ,_1: _U.eq(n.name,
+                                 end) ? n : _v20._1};}
+                       _U.badCase($moduleName,
+                       "on line 24, column 47 to 110");
+                    }();
+                 });
+                 var $ = A3($List.foldl,
+                 helps,
+                 {ctor: "_Tuple2"
+                 ,_0: def
+                 ,_1: def},
+                 nodes),
+                 sNode = $._0,
+                 eNode = $._1;
+                 var $ = {ctor: "_Tuple2"
+                         ,_0: sNode.coord
+                         ,_1: eNode.coord},
+                 j = $._0,
+                 k = $._1;
+                 var $ = sel(edge.route),
+                 d0 = $._0,
+                 d1 = $._1,
+                 s = $._2,
+                 mv = $._3;
+                 var $ = A6(getPath,
+                 j,
+                 k,
+                 $Basics.toFloat(_v16._0) / 2,
+                 $Basics.toFloat(_v16._1) / 2,
+                 {ctor: "_Tuple2",_0: d0,_1: d1},
+                 mv),
+                 points = $._0,
+                 mdx = $._1,
+                 mdy = $._2,
+                 th = $._3;
+                 var txt = $Graphics$Collage.move({ctor: "_Tuple2"
+                                                  ,_0: mdx - $Basics.toFloat(_v16._0) / 2
+                                                  ,_1: $Basics.toFloat(_v16._1) / 2 - mdy})($Graphics$Collage.rotate(0 - th + s)($Graphics$Collage.text($Text.fromString($Basics.toString(edge.token)))));
+                 var pt = $Graphics$Collage.traced(_U.replace([["width"
+                                                               ,5]],
+                 $Graphics$Collage.defaultLine))($Graphics$Collage.path(points));
+                 var tri = $Graphics$Collage.move({ctor: "_Tuple2"
+                                                  ,_0: mdx + d0 - $Basics.toFloat(_v16._0) / 2
+                                                  ,_1: $Basics.toFloat(_v16._1) / 2 - (mdy + 0.8 * $Basics.toFloat(d1))})($Graphics$Collage.filled($Color.red)(A2($Graphics$Collage.ngon,
+                 3,
+                 10)));
+                 return A3($Graphics$Collage.collage,
+                 _v16._0,
+                 _v16._1,
+                 _L.fromArray([pt,txt,tri]));
+              }();}
+         _U.badCase($moduleName,
+         "between lines 23 and 34");
+      }();
+   });
+   _elm.EdgeHelper.values = {_op: _op
+                            ,genEdge: genEdge};
+   return _elm.EdgeHelper.values;
+};
 Elm.Graphics = Elm.Graphics || {};
 Elm.Graphics.Collage = Elm.Graphics.Collage || {};
 Elm.Graphics.Collage.make = function (_elm) {
@@ -7453,6 +7633,7 @@ Elm.Renderer.make = function (_elm) {
    $moduleName = "Renderer",
    $Basics = Elm.Basics.make(_elm),
    $Color = Elm.Color.make(_elm),
+   $EdgeHelper = Elm.EdgeHelper.make(_elm),
    $Graphics$Collage = Elm.Graphics.Collage.make(_elm),
    $Graphics$Element = Elm.Graphics.Element.make(_elm),
    $List = Elm.List.make(_elm),
@@ -7460,8 +7641,9 @@ Elm.Renderer.make = function (_elm) {
    $UI = Elm.UI.make(_elm),
    $Window = Elm.Window.make(_elm),
    $World = Elm.World.make(_elm);
-   var scene = F2(function (_v0,
-   locs) {
+   var scene = F3(function (_v0,
+   locs,
+   edges) {
       return function () {
          switch (_v0.ctor)
          {case "_Tuple2":
@@ -7477,18 +7659,25 @@ Elm.Renderer.make = function (_elm) {
                        $Basics.toFloat(x),
                        0.9,
                        0.6,
-                       0.7))($Graphics$Collage.circle(20))));
+                       0.7))($Graphics$Collage.circle($World.rad))));
                     }();
                  };
-                 return $Graphics$Element.layers(_L.fromArray([A3($Graphics$Collage.collage,
+                 var drawEdge = A2($EdgeHelper.genEdge,
+                 locs,
+                 {ctor: "_Tuple2"
+                 ,_0: _v0._0
+                 ,_1: _v0._1});
+                 return $Graphics$Element.layers(A2($Basics._op["++"],
+                 A2($List.map,drawEdge,edges),
+                 _L.fromArray([A3($Graphics$Collage.collage,
                  _v0._0,
                  _v0._1,
                  A2($List.map,
                  drawCircle,
-                 locs))]));
+                 locs))])));
               }();}
          _U.badCase($moduleName,
-         "between lines 12 and 20");
+         "between lines 13 and 22");
       }();
    });
    var render = F6(function (_v4,
@@ -7504,11 +7693,12 @@ Elm.Renderer.make = function (_elm) {
                  switch (_v4.ctor)
                  {case "_Tuple2":
                     return function () {
-                         var nodes = A2(scene,
+                         var nodes = A3(scene,
                          {ctor: "_Tuple2"
                          ,_0: _v5._0
                          ,_1: _v5._1},
-                         _v4._0);
+                         _v4._0,
+                         _v4._1);
                          var cen = A2($Graphics$Element.flow,
                          $Graphics$Element.outward,
                          A2($Basics._op["++"],
@@ -7535,10 +7725,10 @@ Elm.Renderer.make = function (_elm) {
                          _L.fromArray([cont])));
                       }();}
                  _U.badCase($moduleName,
-                 "between lines 24 and 27");
+                 "between lines 25 and 28");
               }();}
          _U.badCase($moduleName,
-         "between lines 24 and 27");
+         "between lines 25 and 28");
       }();
    });
    var main = A2($Signal._op["~"],
@@ -8531,7 +8721,7 @@ Elm.UI.make = function (_elm) {
       w,
       h,
       _L.fromArray([A2($Graphics$Collage.filled,
-      $Color.red,
+      $Color.yellow,
       A2($Graphics$Collage.rect,
       $Basics.toFloat(w),
       $Basics.toFloat(h)))])));
@@ -8795,7 +8985,7 @@ Elm.World.make = function (_elm) {
                                  _U.chr("(")) || _U.eq(el,
                                  _U.chr(")"))
                                  ,_1: el
-                                 ,_2: _U.cmp(_v14._2,1) < 0};
+                                 ,_2: _U.cmp(_v14._2,2) < 0};
                       switch (_v21.ctor)
                       {case "_Tuple3":
                          switch (_v21._0)
@@ -8808,7 +8998,7 @@ Elm.World.make = function (_elm) {
                                      ,_2: _v14._2};}
                            switch (_v21._1 + "")
                            {case ",": switch (_v21._2)
-                                {case false:
+                                {case true:
                                    return {ctor: "_Tuple3"
                                           ,_0: {ctor: "_Tuple2"
                                                ,_0: _v14._0._0
@@ -8886,7 +9076,7 @@ Elm.World.make = function (_elm) {
       },
       ls);
    };
-   var rad = 20.0;
+   var rad = 40.0;
    var contains = F2(function (_v33,
    _v34) {
       return function () {
@@ -9221,6 +9411,8 @@ Elm.World.make = function (_elm) {
    });
    _elm.World.values = {_op: _op
                        ,runner: runner
-                       ,Node: Node};
+                       ,rad: rad
+                       ,Node: Node
+                       ,Edge: Edge};
    return _elm.World.values;
 };

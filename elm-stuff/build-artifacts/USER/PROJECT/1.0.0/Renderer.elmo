@@ -11,6 +11,7 @@ Elm.Renderer.make = function (_elm) {
    $moduleName = "Renderer",
    $Basics = Elm.Basics.make(_elm),
    $Color = Elm.Color.make(_elm),
+   $EdgeHelper = Elm.EdgeHelper.make(_elm),
    $Graphics$Collage = Elm.Graphics.Collage.make(_elm),
    $Graphics$Element = Elm.Graphics.Element.make(_elm),
    $List = Elm.List.make(_elm),
@@ -18,8 +19,9 @@ Elm.Renderer.make = function (_elm) {
    $UI = Elm.UI.make(_elm),
    $Window = Elm.Window.make(_elm),
    $World = Elm.World.make(_elm);
-   var scene = F2(function (_v0,
-   locs) {
+   var scene = F3(function (_v0,
+   locs,
+   edges) {
       return function () {
          switch (_v0.ctor)
          {case "_Tuple2":
@@ -35,18 +37,25 @@ Elm.Renderer.make = function (_elm) {
                        $Basics.toFloat(x),
                        0.9,
                        0.6,
-                       0.7))($Graphics$Collage.circle(20))));
+                       0.7))($Graphics$Collage.circle($World.rad))));
                     }();
                  };
-                 return $Graphics$Element.layers(_L.fromArray([A3($Graphics$Collage.collage,
+                 var drawEdge = A2($EdgeHelper.genEdge,
+                 locs,
+                 {ctor: "_Tuple2"
+                 ,_0: _v0._0
+                 ,_1: _v0._1});
+                 return $Graphics$Element.layers(A2($Basics._op["++"],
+                 A2($List.map,drawEdge,edges),
+                 _L.fromArray([A3($Graphics$Collage.collage,
                  _v0._0,
                  _v0._1,
                  A2($List.map,
                  drawCircle,
-                 locs))]));
+                 locs))])));
               }();}
          _U.badCase($moduleName,
-         "between lines 12 and 20");
+         "between lines 13 and 22");
       }();
    });
    var render = F6(function (_v4,
@@ -62,11 +71,12 @@ Elm.Renderer.make = function (_elm) {
                  switch (_v4.ctor)
                  {case "_Tuple2":
                     return function () {
-                         var nodes = A2(scene,
+                         var nodes = A3(scene,
                          {ctor: "_Tuple2"
                          ,_0: _v5._0
                          ,_1: _v5._1},
-                         _v4._0);
+                         _v4._0,
+                         _v4._1);
                          var cen = A2($Graphics$Element.flow,
                          $Graphics$Element.outward,
                          A2($Basics._op["++"],
@@ -93,10 +103,10 @@ Elm.Renderer.make = function (_elm) {
                          _L.fromArray([cont])));
                       }();}
                  _U.badCase($moduleName,
-                 "between lines 24 and 27");
+                 "between lines 25 and 28");
               }();}
          _U.badCase($moduleName,
-         "between lines 24 and 27");
+         "between lines 25 and 28");
       }();
    });
    var main = A2($Signal._op["~"],

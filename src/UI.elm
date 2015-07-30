@@ -64,7 +64,7 @@ hover = hoverable (\a-> if a then Signal.message inside.address True
                              else  Signal.message inside.address False)
 
 --Background objects will be placed on
-background w h = collage (w) (h) [filled red (rect (toFloat w) (toFloat h))] 
+background w h = collage (w) (h) [filled yellow (rect (toFloat w) (toFloat h))] 
                  |> hover
 
 

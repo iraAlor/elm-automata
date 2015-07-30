@@ -1,4 +1,4 @@
-module World(runner,Node)  where
+module World(runner,Node,Edge,rad)  where
 import UI exposing(..)
 import Signal exposing(..) 
 import List exposing(foldl) 
@@ -24,7 +24,7 @@ helpy2 (cx,cy) node = let ((px,py),(mx,my)) = (node.pCoor,node.coord) in
                       let (dx,dy) = ((cx-px),(cy-py)) in
                       {node|coord<-(mx+dx,my+dy),pre<-True,pCoor<-(cx,cy)}
 
-rad = 20.0
+rad = 40.0
 contains (cx,cy) (px,py) = (cx-px)^2 +(cy-py)^2 <= (round (rad)^2)
 
 
@@ -47,16 +47,16 @@ helpy ls co = let (node,nls) = (find co ls) in
 
 setToF ls = List.map (\a->{a|pre<-False}) ls
 
-conHelp el ((a,b),ls,counter) = case (el =='(' || (el ==')'),el,counter<1) of
+conHelp el ((a,b),ls,counter) = case (el =='(' || (el ==')'),el,counter<2) of
   (True,_,_) -> ((a,b),ls,counter)
-  (_,',',False)  -> ((a,b),ls,counter+1)
+  (_,',',True)  -> ((a,b),ls,counter+1)
   (_,_,True) -> if counter == 0 then ((String.cons el "",b),ls,counter) else ((a,String.cons el ""),ls,counter)
   (_,_,_)    -> ((a,b),String.cons el ls,counter)
   
 convertToE str  = let (r,tk,_) = String.foldl conHelp (("",""),"",0) str in
                   let ttk = String.split ","( String.reverse tk) in
                   (r,ttk)
-conEdge strEdge = let (rt,toks) = convertToE strEdge in
+conEdge strEdge = let (rt,toks) = convertToE (strEdge) in
                   {sEdge|route<-rt,token<-toks}
 
 conNode na = {start|name<-na}

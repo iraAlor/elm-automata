@@ -104,7 +104,7 @@ Elm.UI.make = function (_elm) {
       w,
       h,
       _L.fromArray([A2($Graphics$Collage.filled,
-      $Color.red,
+      $Color.yellow,
       A2($Graphics$Collage.rect,
       $Basics.toFloat(w),
       $Basics.toFloat(h)))])));
