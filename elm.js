@@ -750,7 +750,7 @@ Elm.EdgeHelper.make = function (_elm) {
                                                        ,_2: $Basics.degrees(180)
                                                        ,_3: -0.875 * $World.rad};}
          _U.badCase($moduleName,
-         "on line 21, column 13 to 111");
+         "on line 23, column 13 to 111");
       }();
    };
    var getPath = F6(function (_v4,
@@ -800,13 +800,13 @@ Elm.EdgeHelper.make = function (_elm) {
                                         ,_4: oc};
                               }();}
                          _U.badCase($moduleName,
-                         "between lines 16 and 20");
+                         "between lines 18 and 22");
                       }();}
                  _U.badCase($moduleName,
-                 "between lines 16 and 20");
+                 "between lines 18 and 22");
               }();}
          _U.badCase($moduleName,
-         "between lines 16 and 20");
+         "between lines 18 and 22");
       }();
    });
    var belzGen = F4(function (start,
@@ -820,11 +820,13 @@ Elm.EdgeHelper.make = function (_elm) {
              ,coord: {ctor: "_Tuple2"
                      ,_0: 10
                      ,_1: 10}
+             ,fin: false
              ,name: ""
              ,pCoor: {ctor: "_Tuple2"
                      ,_0: 0
                      ,_1: 0}
-             ,pre: false};
+             ,pre: false
+             ,start: false};
    var genEdge = F3(function (nodes,
    _v16,
    edge) {
@@ -846,7 +848,7 @@ Elm.EdgeHelper.make = function (_elm) {
                                  ,_1: _U.eq(n.name,
                                  end) ? n : _v20._1};}
                        _U.badCase($moduleName,
-                       "on line 25, column 47 to 110");
+                       "on line 27, column 47 to 110");
                     }();
                  });
                  var $ = A3($List.foldl,
@@ -882,7 +884,7 @@ Elm.EdgeHelper.make = function (_elm) {
                             return _._4._0;}
                          break;}
                     _U.badCase($moduleName,
-                    "on line 29, column 59 to 109");
+                    "on line 31, column 59 to 109");
                  }();
                  var b = function () {
                     switch (_.ctor)
@@ -892,7 +894,7 @@ Elm.EdgeHelper.make = function (_elm) {
                             return _._4._1;}
                          break;}
                     _U.badCase($moduleName,
-                    "on line 29, column 59 to 109");
+                    "on line 31, column 59 to 109");
                  }();
                  var mdx = function () {
                     switch (_.ctor)
@@ -901,7 +903,7 @@ Elm.EdgeHelper.make = function (_elm) {
                          {case "_Tuple2": return _._1;}
                          break;}
                     _U.badCase($moduleName,
-                    "on line 29, column 59 to 109");
+                    "on line 31, column 59 to 109");
                  }();
                  var mdy = function () {
                     switch (_.ctor)
@@ -910,7 +912,7 @@ Elm.EdgeHelper.make = function (_elm) {
                          {case "_Tuple2": return _._2;}
                          break;}
                     _U.badCase($moduleName,
-                    "on line 29, column 59 to 109");
+                    "on line 31, column 59 to 109");
                  }();
                  var points = function () {
                     switch (_.ctor)
@@ -919,7 +921,7 @@ Elm.EdgeHelper.make = function (_elm) {
                          {case "_Tuple2": return _._0;}
                          break;}
                     _U.badCase($moduleName,
-                    "on line 29, column 59 to 109");
+                    "on line 31, column 59 to 109");
                  }();
                  var th = function () {
                     switch (_.ctor)
@@ -928,7 +930,7 @@ Elm.EdgeHelper.make = function (_elm) {
                          {case "_Tuple2": return _._3;}
                          break;}
                     _U.badCase($moduleName,
-                    "on line 29, column 59 to 109");
+                    "on line 31, column 59 to 109");
                  }();
                  var txt = $Graphics$Collage.move({ctor: "_Tuple2"
                                                   ,_0: mdx - $Basics.toFloat(_v16._0) / 2
@@ -947,7 +949,7 @@ Elm.EdgeHelper.make = function (_elm) {
                  _L.fromArray([pt,txt,tri]));
               }();}
          _U.badCase($moduleName,
-         "between lines 24 and 38");
+         "between lines 26 and 40");
       }();
    });
    _elm.EdgeHelper.values = {_op: _op
@@ -7725,6 +7727,38 @@ Elm.Renderer.make = function (_elm) {
                                                      ,_1: $Basics.toFloat(_v0._1) / 2 - $Basics.toFloat(y)})($Graphics$Collage.filled($Color.blue)($Graphics$Collage.circle($World.rad)));
                     }();
                  };
+                 var finS = A2($List.filter,
+                 function (el) {
+                    return el.fin;
+                 },
+                 locs);
+                 var drawFin = function (node) {
+                    return function () {
+                       var $ = node.coord,
+                       x = $._0,
+                       y = $._1;
+                       return $Graphics$Collage.move({ctor: "_Tuple2"
+                                                     ,_0: $Basics.toFloat(x) - $Basics.toFloat(_v0._0) / 2
+                                                     ,_1: $Basics.toFloat(_v0._1) / 2 - $Basics.toFloat(y)})($Graphics$Collage.filled($Color.lightBlue)($Graphics$Collage.circle($World.rad * 0.5)));
+                    }();
+                 };
+                 var star = A2($List.filter,
+                 function (el) {
+                    return el.start;
+                 },
+                 locs);
+                 var drawTri = function (node) {
+                    return function () {
+                       var $ = node.coord,
+                       x = $._0,
+                       y = $._1;
+                       return $Graphics$Collage.move({ctor: "_Tuple2"
+                                                     ,_0: $Basics.toFloat(x) - $World.rad - $Basics.toFloat(_v0._0) / 2
+                                                     ,_1: $Basics.toFloat(_v0._1) / 2 - $Basics.toFloat(y)})($Graphics$Collage.rotate($Basics.degrees(0))($Graphics$Collage.filled($Color.orange)(A2($Graphics$Collage.ngon,
+                       3,
+                       $World.rad / 3))));
+                    }();
+                 };
                  var drawEdge = A2($EdgeHelper.genEdge,
                  locs,
                  {ctor: "_Tuple2"
@@ -7739,69 +7773,122 @@ Elm.Renderer.make = function (_elm) {
                  A2($List.map,
                  drawCircle,
                  locs))]),
+                 A2($Basics._op["++"],
+                 _L.fromArray([A3($Graphics$Collage.collage,
+                 _v0._0,
+                 _v0._1,
+                 A2($List.map,drawFin,finS))]),
+                 A2($Basics._op["++"],
+                 _L.fromArray([A3($Graphics$Collage.collage,
+                 _v0._0,
+                 _v0._1,
+                 A2($List.map,drawTri,star))]),
                  _L.fromArray([A3($Graphics$Collage.collage,
                  _v0._0,
                  _v0._1,
                  A2($List.map,
                  drawText,
-                 locs))]))));
+                 locs))]))))));
               }();}
          _U.badCase($moduleName,
-         "between lines 14 and 28");
+         "between lines 14 and 43");
       }();
    });
-   var render = F6(function (_v4,
-   a,
-   b,
-   c,
-   d,
-   _v5) {
-      return function () {
-         switch (_v5.ctor)
-         {case "_Tuple2":
-            return function () {
-                 switch (_v4.ctor)
-                 {case "_Tuple2":
-                    return function () {
-                         var nodes = A3(scene,
-                         {ctor: "_Tuple2"
-                         ,_0: _v5._0
-                         ,_1: _v5._1},
-                         _v4._0,
-                         _v4._1);
-                         var cen = A2($Graphics$Element.flow,
-                         $Graphics$Element.outward,
-                         A2($Basics._op["++"],
-                         _L.fromArray([A2($UI.background,
-                         _v5._0,
-                         _v5._1)]),
-                         _L.fromArray([nodes])));
-                         var cont = A2($Graphics$Element.flow,
-                         $Graphics$Element.down,
-                         A3($List.map2,
-                         F2(function (el1,el2) {
-                            return A2($Graphics$Element.flow,
-                            $Graphics$Element.right,
-                            A2($Basics._op["++"],
-                            _L.fromArray([el1]),
-                            _L.fromArray([el2])));
-                         }),
-                         $UI.buttons,
-                         _L.fromArray([a,b,c,d])));
-                         return A2($Graphics$Element.flow,
-                         $Graphics$Element.down,
-                         A2($Basics._op["++"],
-                         _L.fromArray([cen]),
-                         _L.fromArray([cont])));
-                      }();}
-                 _U.badCase($moduleName,
-                 "between lines 31 and 34");
-              }();}
-         _U.badCase($moduleName,
-         "between lines 31 and 34");
-      }();
-   });
+   var render = function (_v4) {
+      return function (a) {
+         return function (b) {
+            return function (c) {
+               return function (d) {
+                  return function (e) {
+                     return function (f) {
+                        return function (g) {
+                           return function (i) {
+                              return function (j) {
+                                 return function (_v5) {
+                                    return function () {
+                                       switch (_v5.ctor)
+                                       {case "_Tuple2":
+                                          return function () {
+                                               switch (_v4.ctor)
+                                               {case "_Tuple2":
+                                                  return function () {
+                                                       var nodes = A3(scene,
+                                                       {ctor: "_Tuple2"
+                                                       ,_0: _v5._0
+                                                       ,_1: _v5._1},
+                                                       _v4._0,
+                                                       _v4._1);
+                                                       var helper = F2(function (l,
+                                                       ls) {
+                                                          return A2($Graphics$Element.flow,
+                                                          $Graphics$Element.down,
+                                                          A3($List.map2,
+                                                          F2(function (el1,
+                                                          el2) {
+                                                             return A2($Graphics$Element.flow,
+                                                             $Graphics$Element.right,
+                                                             A2($Basics._op["++"],
+                                                             _L.fromArray([el1]),
+                                                             _L.fromArray([el2])));
+                                                          }),
+                                                          l,
+                                                          ls));
+                                                       });
+                                                       var cen = A2($Graphics$Element.flow,
+                                                       $Graphics$Element.outward,
+                                                       A2($Basics._op["++"],
+                                                       _L.fromArray([A2($UI.background,
+                                                       _v5._0,
+                                                       _v5._1)]),
+                                                       _L.fromArray([nodes])));
+                                                       var g1 = A2(helper,
+                                                       $UI.buttons,
+                                                       _L.fromArray([a,b,c,d]));
+                                                       var g2 = A2(helper,
+                                                       $UI.buttons2,
+                                                       _L.fromArray([e,f,g]));
+                                                       var g3 = A2(helper,
+                                                       $UI.buttons3,
+                                                       _L.fromArray([i,j]));
+                                                       var g4 = $UI.buttons4;
+                                                       var cont = A2($Graphics$Element.flow,
+                                                       $Graphics$Element.right,
+                                                       A2($Basics._op["++"],
+                                                       _L.fromArray([g1]),
+                                                       A2($Basics._op["++"],
+                                                       _L.fromArray([g2]),
+                                                       A2($Basics._op["++"],
+                                                       _L.fromArray([g3]),
+                                                       g4))));
+                                                       return A2($Graphics$Element.flow,
+                                                       $Graphics$Element.down,
+                                                       A2($Basics._op["++"],
+                                                       _L.fromArray([cen]),
+                                                       _L.fromArray([cont])));
+                                                    }();}
+                                               _U.badCase($moduleName,
+                                               "between lines 46 and 54");
+                                            }();}
+                                       _U.badCase($moduleName,
+                                       "between lines 46 and 54");
+                                    }();
+                                 };
+                              };
+                           };
+                        };
+                     };
+                  };
+               };
+            };
+         };
+      };
+   };
    var main = A2($Signal._op["~"],
+   A2($Signal._op["~"],
+   A2($Signal._op["~"],
+   A2($Signal._op["~"],
+   A2($Signal._op["~"],
+   A2($Signal._op["~"],
    A2($Signal._op["~"],
    A2($Signal._op["~"],
    A2($Signal._op["~"],
@@ -7813,6 +7900,11 @@ Elm.Renderer.make = function (_elm) {
    $UI.aEField),
    $UI.dEField),
    $UI.dNField),
+   $UI.startFd),
+   $UI.finalAd),
+   $UI.finalRm),
+   $UI.testStrF),
+   $UI.testReF),
    $Window.dimensions);
    _elm.Renderer.values = {_op: _op
                           ,scene: scene
@@ -8733,10 +8825,71 @@ Elm.UI.make = function (_elm) {
       mes),
       A2(pro,box.signal,tr));
    });
+   var testRe = $Signal.mailbox($Graphics$Input$Field.noContent);
+   var testStr = $Signal.mailbox($Graphics$Input$Field.noContent);
+   var setStar = $Signal.mailbox($Graphics$Input$Field.noContent);
+   var remFin = $Signal.mailbox($Graphics$Input$Field.noContent);
+   var addFin = $Signal.mailbox($Graphics$Input$Field.noContent);
    var edgeDF = $Signal.mailbox($Graphics$Input$Field.noContent);
    var edgeIF = $Signal.mailbox($Graphics$Input$Field.noContent);
    var nodeDF = $Signal.mailbox($Graphics$Input$Field.noContent);
    var nodeIF = $Signal.mailbox($Graphics$Input$Field.noContent);
+   var saveButt = $Signal.mailbox(false);
+   var buttons4 = _L.fromArray([A2($Graphics$Input.button,
+   A2($Signal.message,
+   saveButt.address,
+   true),
+   "Save")]);
+   var testStrB = $Signal.mailbox(false);
+   var testStrF = A3(boiler,
+   testStr,
+   testStrB.signal,
+   "Supply Test String");
+   var testReB = $Signal.mailbox(false);
+   var buttons3 = _L.fromArray([A2($Graphics$Input.button,
+                               A2($Signal.message,
+                               testStrB.address,
+                               true),
+                               "Run on String(s)")
+                               ,A2($Graphics$Input.button,
+                               A2($Signal.message,
+                               testReB.address,
+                               true),
+                               "Compare to RE")]);
+   var testReF = A3(boiler,
+   testRe,
+   testReB.signal,
+   "Supply Regular Expression");
+   var setStarB = $Signal.mailbox(false);
+   var startFd = A3(boiler,
+   setStar,
+   setStarB.signal,
+   "Set Start State");
+   var remFinnB = $Signal.mailbox(false);
+   var finalRm = A3(boiler,
+   remFin,
+   remFinnB.signal,
+   "Remove Final State(s)");
+   var addFinnB = $Signal.mailbox(false);
+   var buttons2 = _L.fromArray([A2($Graphics$Input.button,
+                               A2($Signal.message,
+                               setStarB.address,
+                               true),
+                               "Set Start State")
+                               ,A2($Graphics$Input.button,
+                               A2($Signal.message,
+                               addFinnB.address,
+                               true),
+                               "Add Final State(s)")
+                               ,A2($Graphics$Input.button,
+                               A2($Signal.message,
+                               remFinnB.address,
+                               true),
+                               "Remove Final State(s)")]);
+   var finalAd = A3(boiler,
+   addFin,
+   addFinnB.signal,
+   "Add Final State(s)");
    var nodeDMan = $Signal.mailbox(false);
    var dNField = A3(boiler,
    nodeDF,
@@ -8757,7 +8910,7 @@ Elm.UI.make = function (_elm) {
                               A2($Signal.message,
                               nodeIMan.address,
                               true),
-                              "Add Node")
+                              "Add Node(s)")
                               ,A2($Graphics$Input.button,
                               A2($Signal.message,
                               edgeIMan.address,
@@ -8772,7 +8925,7 @@ Elm.UI.make = function (_elm) {
                               A2($Signal.message,
                               nodeDMan.address,
                               true),
-                              "Remove Node")]);
+                              "Remove Node(s)")]);
    var aNField = A3(boiler,
    nodeIF,
    nodeIMan.signal,
@@ -8798,6 +8951,27 @@ Elm.UI.make = function (_elm) {
    });
    var No = {ctor: "No"};
    var Yes = {ctor: "Yes"};
+   var TestStr = function (a) {
+      return {ctor: "TestStr"
+             ,_0: a};
+   };
+   var TestRE = function (a) {
+      return {ctor: "TestRE"
+             ,_0: a};
+   };
+   var RemFinal = function (a) {
+      return {ctor: "RemFinal"
+             ,_0: a};
+   };
+   var SetFinal = function (a) {
+      return {ctor: "SetFinal"
+             ,_0: a};
+   };
+   var SetStart = function (a) {
+      return {ctor: "SetStart"
+             ,_0: a};
+   };
+   var Save = {ctor: "Save"};
    var Press = function (a) {
       return {ctor: "Press",_0: a};
    };
@@ -8845,9 +9019,40 @@ Elm.UI.make = function (_elm) {
                                               edgeDMan.signal,
                                               DeleteEdge,
                                               edgeDF.signal)
+                                              ,A3(wrap0,
+                                              addFinnB.signal,
+                                              SetFinal,
+                                              addFin.signal)
+                                              ,A3(wrap0,
+                                              remFinnB.signal,
+                                              RemFinal,
+                                              remFin.signal)
+                                              ,A3(wrap0,
+                                              setStarB.signal,
+                                              SetStart,
+                                              setStar.signal)
+                                              ,A3(wrap0,
+                                              testReB.signal,
+                                              TestRE,
+                                              testRe.signal)
+                                              ,A3(wrap0,
+                                              testStrB.signal,
+                                              TestStr,
+                                              testStr.signal)
+                                              ,A2($Signal.sampleOn,
+                                              saveButt.signal,
+                                              $Signal.constant(Save))
                                               ,pressSig]));
    _elm.UI.values = {_op: _op
+                    ,finalAd: finalAd
+                    ,finalRm: finalRm
+                    ,testStrF: testStrF
+                    ,testReF: testReF
+                    ,startFd: startFd
                     ,buttons: buttons
+                    ,buttons2: buttons2
+                    ,buttons3: buttons3
+                    ,buttons4: buttons4
                     ,mySig: mySig
                     ,aNField: aNField
                     ,dEField: dEField
@@ -8858,7 +9063,13 @@ Elm.UI.make = function (_elm) {
                     ,InsertEdge: InsertEdge
                     ,DeleteEdge: DeleteEdge
                     ,DeleteNode: DeleteNode
-                    ,Press: Press};
+                    ,Press: Press
+                    ,Save: Save
+                    ,SetStart: SetStart
+                    ,SetFinal: SetFinal
+                    ,RemFinal: RemFinal
+                    ,TestRE: TestRE
+                    ,TestStr: TestStr};
    return _elm.UI.values;
 };
 Elm.Window = Elm.Window || {};
@@ -8908,6 +9119,27 @@ Elm.World.make = function (_elm) {
    var init = {ctor: "_Tuple2"
               ,_0: _L.fromArray([])
               ,_1: _L.fromArray([])};
+   var setStart = F2(function (ls,
+   str) {
+      return A2($List.map,
+      function (el) {
+         return _U.replace([["start"
+                            ,_U.eq(el.name,str)]],
+         el);
+      },
+      ls);
+   });
+   var setFin = F3(function (bool,
+   ls,
+   mt) {
+      return A2($List.map,
+      function (el) {
+         return _U.eq(el.name,
+         mt) ? _U.replace([["fin",bool]],
+         el) : el;
+      },
+      ls);
+   });
    var listPatt = F3(function (comp,
    el,
    _v0) {
@@ -8931,7 +9163,7 @@ Elm.World.make = function (_elm) {
                         _v0._1)};
               }();}
          _U.badCase($moduleName,
-         "between lines 75 and 77");
+         "between lines 79 and 81");
       }();
    });
    var addPatt = F6(function (comp,
@@ -8960,7 +9192,7 @@ Elm.World.make = function (_elm) {
                  base,
                  nls);}
             _U.badCase($moduleName,
-            "between lines 81 and 83");
+            "between lines 85 and 87");
          }();
       }();
    });
@@ -8977,7 +9209,7 @@ Elm.World.make = function (_elm) {
             switch (_.ctor)
             {case "_Tuple2": return _._1;}
             _U.badCase($moduleName,
-            "on line 90, column 33 to 76");
+            "on line 94, column 33 to 76");
          }();
          return acc;
       }();
@@ -9000,7 +9232,7 @@ Elm.World.make = function (_elm) {
                          ,_1: _v10._1 || _U.eq(el.name,
                          n1)};}
                _U.badCase($moduleName,
-               "on line 71, column 62 to 93");
+               "on line 75, column 62 to 93");
             }();
          }),
          {ctor: "_Tuple2"
@@ -9099,11 +9331,11 @@ Elm.World.make = function (_elm) {
                                   ,_1: A2($String.cons,el,_v14._1)
                                   ,_2: _v14._2};}
                       _U.badCase($moduleName,
-                      "between lines 50 and 55");
+                      "between lines 54 and 59");
                    }();}
               break;}
          _U.badCase($moduleName,
-         "between lines 50 and 55");
+         "between lines 54 and 59");
       }();
    });
    var convertToE = function (str) {
@@ -9121,13 +9353,13 @@ Elm.World.make = function (_elm) {
             switch (_.ctor)
             {case "_Tuple3": return _._0;}
             _U.badCase($moduleName,
-            "on line 56, column 34 to 73");
+            "on line 60, column 34 to 73");
          }();
          var tk = function () {
             switch (_.ctor)
             {case "_Tuple3": return _._1;}
             _U.badCase($moduleName,
-            "on line 56, column 34 to 73");
+            "on line 60, column 34 to 73");
          }();
          var ttk = A2($String.split,
          ",",
@@ -9161,10 +9393,10 @@ Elm.World.make = function (_elm) {
                       Math.pow($Basics.round(rad),
                       2)) < 1;}
                  _U.badCase($moduleName,
-                 "on line 28, column 29 to 66");
+                 "on line 32, column 29 to 66");
               }();}
          _U.badCase($moduleName,
-         "on line 28, column 29 to 66");
+         "on line 32, column 29 to 66");
       }();
    });
    var helper = F3(function (_v41,
@@ -9197,10 +9429,10 @@ Elm.World.make = function (_elm) {
                                 _v42._1)};
                       }();}
                  _U.badCase($moduleName,
-                 "between lines 32 and 34");
+                 "between lines 36 and 38");
               }();}
          _U.badCase($moduleName,
-         "between lines 32 and 34");
+         "between lines 36 and 38");
       }();
    });
    var helpy2 = F2(function (_v50,
@@ -9223,7 +9455,7 @@ Elm.World.make = function (_elm) {
                               break;}
                          break;}
                     _U.badCase($moduleName,
-                    "on line 23, column 48 to 69");
+                    "on line 27, column 48 to 69");
                  }();
                  var my = function () {
                     switch (_.ctor)
@@ -9236,7 +9468,7 @@ Elm.World.make = function (_elm) {
                               break;}
                          break;}
                     _U.badCase($moduleName,
-                    "on line 23, column 48 to 69");
+                    "on line 27, column 48 to 69");
                  }();
                  var px = function () {
                     switch (_.ctor)
@@ -9249,7 +9481,7 @@ Elm.World.make = function (_elm) {
                               break;}
                          break;}
                     _U.badCase($moduleName,
-                    "on line 23, column 48 to 69");
+                    "on line 27, column 48 to 69");
                  }();
                  var py = function () {
                     switch (_.ctor)
@@ -9262,7 +9494,7 @@ Elm.World.make = function (_elm) {
                               break;}
                          break;}
                     _U.badCase($moduleName,
-                    "on line 23, column 48 to 69");
+                    "on line 27, column 48 to 69");
                  }();
                  var $ = {ctor: "_Tuple2"
                          ,_0: _v50._0 - px
@@ -9281,7 +9513,7 @@ Elm.World.make = function (_elm) {
                  node);
               }();}
          _U.badCase($moduleName,
-         "between lines 23 and 25");
+         "between lines 27 and 29");
       }();
    });
    var find = F2(function (co,ls) {
@@ -9329,7 +9561,7 @@ Elm.World.make = function (_elm) {
                case "Nothing":
                return setToF(nls);}
             _U.badCase($moduleName,
-            "between lines 44 and 46");
+            "between lines 48 and 50");
          }();
       }();
    });
@@ -9367,11 +9599,13 @@ Elm.World.make = function (_elm) {
                ,coord: {ctor: "_Tuple2"
                        ,_0: 10
                        ,_1: 10}
+               ,fin: false
                ,name: ""
                ,pCoor: {ctor: "_Tuple2"
                        ,_0: 0
                        ,_1: 0}
-               ,pre: false};
+               ,pre: false
+               ,start: false};
    var conNode = function (na) {
       return _U.replace([["name"
                          ,na]],
@@ -9407,7 +9641,7 @@ Elm.World.make = function (_elm) {
                                  switch (_.ctor)
                                  {case "_Tuple2": return _._0;}
                                  _U.badCase($moduleName,
-                                 "on line 96, column 45 to 57");
+                                 "on line 103, column 45 to 57");
                               }();
                               return A2(delItem,
                               function (el) {
@@ -9450,12 +9684,44 @@ Elm.World.make = function (_elm) {
                                      ,_1: action._0._0._1}) : setToF(_v86._0)
                                      ,_1: _v86._1};}
                            break;}
-                      break;}
+                      break;
+                    case "RemFinal":
+                    return {ctor: "_Tuple2"
+                           ,_0: A3(setFin,
+                           false,
+                           _v86._0,
+                           action._0)
+                           ,_1: _v86._1};
+                    case "Save":
+                    return {ctor: "_Tuple2"
+                           ,_0: _v86._0
+                           ,_1: _v86._1};
+                    case "SetFinal":
+                    return {ctor: "_Tuple2"
+                           ,_0: A3(setFin,
+                           true,
+                           _v86._0,
+                           action._0)
+                           ,_1: _v86._1};
+                    case "SetStart":
+                    return {ctor: "_Tuple2"
+                           ,_0: A2(setStart,
+                           _v86._0,
+                           action._0)
+                           ,_1: _v86._1};
+                    case "TestRE":
+                    return {ctor: "_Tuple2"
+                           ,_0: _v86._0
+                           ,_1: _v86._1};
+                    case "TestStr":
+                    return {ctor: "_Tuple2"
+                           ,_0: _v86._0
+                           ,_1: _v86._1};}
                  _U.badCase($moduleName,
-                 "between lines 93 and 100");
+                 "between lines 100 and 113");
               }();}
          _U.badCase($moduleName,
-         "between lines 93 and 100");
+         "between lines 100 and 113");
       }();
    });
    var runner = A3($Signal.foldp,
@@ -9469,15 +9735,19 @@ Elm.World.make = function (_elm) {
              ,route: a
              ,token: b};
    });
-   var Node = F4(function (a,
+   var Node = F6(function (a,
    b,
    c,
-   d) {
+   d,
+   e,
+   f) {
       return {_: {}
              ,coord: a
+             ,fin: f
              ,name: d
              ,pCoor: c
-             ,pre: b};
+             ,pre: b
+             ,start: e};
    });
    _elm.World.values = {_op: _op
                        ,runner: runner

@@ -46,10 +46,71 @@ Elm.UI.make = function (_elm) {
       mes),
       A2(pro,box.signal,tr));
    });
+   var testRe = $Signal.mailbox($Graphics$Input$Field.noContent);
+   var testStr = $Signal.mailbox($Graphics$Input$Field.noContent);
+   var setStar = $Signal.mailbox($Graphics$Input$Field.noContent);
+   var remFin = $Signal.mailbox($Graphics$Input$Field.noContent);
+   var addFin = $Signal.mailbox($Graphics$Input$Field.noContent);
    var edgeDF = $Signal.mailbox($Graphics$Input$Field.noContent);
    var edgeIF = $Signal.mailbox($Graphics$Input$Field.noContent);
    var nodeDF = $Signal.mailbox($Graphics$Input$Field.noContent);
    var nodeIF = $Signal.mailbox($Graphics$Input$Field.noContent);
+   var saveButt = $Signal.mailbox(false);
+   var buttons4 = _L.fromArray([A2($Graphics$Input.button,
+   A2($Signal.message,
+   saveButt.address,
+   true),
+   "Save")]);
+   var testStrB = $Signal.mailbox(false);
+   var testStrF = A3(boiler,
+   testStr,
+   testStrB.signal,
+   "Supply Test String");
+   var testReB = $Signal.mailbox(false);
+   var buttons3 = _L.fromArray([A2($Graphics$Input.button,
+                               A2($Signal.message,
+                               testStrB.address,
+                               true),
+                               "Run on String(s)")
+                               ,A2($Graphics$Input.button,
+                               A2($Signal.message,
+                               testReB.address,
+                               true),
+                               "Compare to RE")]);
+   var testReF = A3(boiler,
+   testRe,
+   testReB.signal,
+   "Supply Regular Expression");
+   var setStarB = $Signal.mailbox(false);
+   var startFd = A3(boiler,
+   setStar,
+   setStarB.signal,
+   "Set Start State");
+   var remFinnB = $Signal.mailbox(false);
+   var finalRm = A3(boiler,
+   remFin,
+   remFinnB.signal,
+   "Remove Final State(s)");
+   var addFinnB = $Signal.mailbox(false);
+   var buttons2 = _L.fromArray([A2($Graphics$Input.button,
+                               A2($Signal.message,
+                               setStarB.address,
+                               true),
+                               "Set Start State")
+                               ,A2($Graphics$Input.button,
+                               A2($Signal.message,
+                               addFinnB.address,
+                               true),
+                               "Add Final State(s)")
+                               ,A2($Graphics$Input.button,
+                               A2($Signal.message,
+                               remFinnB.address,
+                               true),
+                               "Remove Final State(s)")]);
+   var finalAd = A3(boiler,
+   addFin,
+   addFinnB.signal,
+   "Add Final State(s)");
    var nodeDMan = $Signal.mailbox(false);
    var dNField = A3(boiler,
    nodeDF,
@@ -70,7 +131,7 @@ Elm.UI.make = function (_elm) {
                               A2($Signal.message,
                               nodeIMan.address,
                               true),
-                              "Add Node")
+                              "Add Node(s)")
                               ,A2($Graphics$Input.button,
                               A2($Signal.message,
                               edgeIMan.address,
@@ -85,7 +146,7 @@ Elm.UI.make = function (_elm) {
                               A2($Signal.message,
                               nodeDMan.address,
                               true),
-                              "Remove Node")]);
+                              "Remove Node(s)")]);
    var aNField = A3(boiler,
    nodeIF,
    nodeIMan.signal,
@@ -111,6 +172,27 @@ Elm.UI.make = function (_elm) {
    });
    var No = {ctor: "No"};
    var Yes = {ctor: "Yes"};
+   var TestStr = function (a) {
+      return {ctor: "TestStr"
+             ,_0: a};
+   };
+   var TestRE = function (a) {
+      return {ctor: "TestRE"
+             ,_0: a};
+   };
+   var RemFinal = function (a) {
+      return {ctor: "RemFinal"
+             ,_0: a};
+   };
+   var SetFinal = function (a) {
+      return {ctor: "SetFinal"
+             ,_0: a};
+   };
+   var SetStart = function (a) {
+      return {ctor: "SetStart"
+             ,_0: a};
+   };
+   var Save = {ctor: "Save"};
    var Press = function (a) {
       return {ctor: "Press",_0: a};
    };
@@ -158,9 +240,40 @@ Elm.UI.make = function (_elm) {
                                               edgeDMan.signal,
                                               DeleteEdge,
                                               edgeDF.signal)
+                                              ,A3(wrap0,
+                                              addFinnB.signal,
+                                              SetFinal,
+                                              addFin.signal)
+                                              ,A3(wrap0,
+                                              remFinnB.signal,
+                                              RemFinal,
+                                              remFin.signal)
+                                              ,A3(wrap0,
+                                              setStarB.signal,
+                                              SetStart,
+                                              setStar.signal)
+                                              ,A3(wrap0,
+                                              testReB.signal,
+                                              TestRE,
+                                              testRe.signal)
+                                              ,A3(wrap0,
+                                              testStrB.signal,
+                                              TestStr,
+                                              testStr.signal)
+                                              ,A2($Signal.sampleOn,
+                                              saveButt.signal,
+                                              $Signal.constant(Save))
                                               ,pressSig]));
    _elm.UI.values = {_op: _op
+                    ,finalAd: finalAd
+                    ,finalRm: finalRm
+                    ,testStrF: testStrF
+                    ,testReF: testReF
+                    ,startFd: startFd
                     ,buttons: buttons
+                    ,buttons2: buttons2
+                    ,buttons3: buttons3
+                    ,buttons4: buttons4
                     ,mySig: mySig
                     ,aNField: aNField
                     ,dEField: dEField
@@ -171,6 +284,12 @@ Elm.UI.make = function (_elm) {
                     ,InsertEdge: InsertEdge
                     ,DeleteEdge: DeleteEdge
                     ,DeleteNode: DeleteNode
-                    ,Press: Press};
+                    ,Press: Press
+                    ,Save: Save
+                    ,SetStart: SetStart
+                    ,SetFinal: SetFinal
+                    ,RemFinal: RemFinal
+                    ,TestRE: TestRE
+                    ,TestStr: TestStr};
    return _elm.UI.values;
 };

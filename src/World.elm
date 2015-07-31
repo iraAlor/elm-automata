@@ -7,6 +7,8 @@ type alias Node  = {  coord : (Int,Int)
                    ,  pre  : Bool
                    ,  pCoor : (Int,Int)
                    ,  name : String
+                   ,  start: Bool
+                   ,  fin  : Bool
                    }
 type alias Edge = { route:(String,String)
                   , token:List String
@@ -14,7 +16,9 @@ type alias Edge = { route:(String,String)
 start = { coord = (10,10)
         , pre   = False
         , pCoor = (0,0)
-        ,name = ""
+        , name  = ""
+        , start = False
+        , fin   = False
         }
 sEdge = {route = ("","")
         ,token = []
@@ -89,6 +93,9 @@ addEdge strE  state ins = addPatt compEdge conEdge upEdge (\a b ->a::b)   state 
 
 delItem cmp ls  = let (_,acc) = List.foldl (listPatt (cmp)) (Nothing,[]) ls in
                      acc
+setFin bool ls mt = List.map (\el-> (if el.name == mt then {el|fin<-bool} 
+                                             else el)) ls
+setStart ls str =   List.map (\el->{el|start<-(el.name == str)}) ls
 updateC action (state,ed) =
     case action of
          InsertNode  v -> (addNode v state,ed)
@@ -97,6 +104,12 @@ updateC action (state,ed) =
          InsertEdge v -> (state,addEdge v ed state)
          Press ((x,y),pr,ins) -> (if ins && pr then helpy state (( x),( y)) 
                                               else setToF state,ed)  
+         Save -> (state,ed)
+         SetStart v -> (setStart state v ,ed) 
+         SetFinal v -> (setFin True state v,ed)
+         RemFinal v -> (setFin False state v,ed)
+         TestRE   v -> (state,ed)
+         TestStr  v -> (state,ed)
                                                                 
 
 

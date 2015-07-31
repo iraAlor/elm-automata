@@ -10,6 +10,8 @@ def ={ coord = (10,10)
      , pre   = False
      , pCoor = (0,0)
      , name  = ""
+     , fin   = False
+     , start = False
      }
 
 belzGen start end cont = \t->  ((1-t)^2*start+2*(1-t)*t*cont+t*t*end)

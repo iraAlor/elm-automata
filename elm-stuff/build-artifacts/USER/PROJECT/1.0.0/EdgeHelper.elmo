@@ -30,7 +30,7 @@ Elm.EdgeHelper.make = function (_elm) {
                                                        ,_2: $Basics.degrees(180)
                                                        ,_3: -0.875 * $World.rad};}
          _U.badCase($moduleName,
-         "on line 21, column 13 to 111");
+         "on line 23, column 13 to 111");
       }();
    };
    var getPath = F6(function (_v4,
@@ -80,13 +80,13 @@ Elm.EdgeHelper.make = function (_elm) {
                                         ,_4: oc};
                               }();}
                          _U.badCase($moduleName,
-                         "between lines 16 and 20");
+                         "between lines 18 and 22");
                       }();}
                  _U.badCase($moduleName,
-                 "between lines 16 and 20");
+                 "between lines 18 and 22");
               }();}
          _U.badCase($moduleName,
-         "between lines 16 and 20");
+         "between lines 18 and 22");
       }();
    });
    var belzGen = F4(function (start,
@@ -100,11 +100,13 @@ Elm.EdgeHelper.make = function (_elm) {
              ,coord: {ctor: "_Tuple2"
                      ,_0: 10
                      ,_1: 10}
+             ,fin: false
              ,name: ""
              ,pCoor: {ctor: "_Tuple2"
                      ,_0: 0
                      ,_1: 0}
-             ,pre: false};
+             ,pre: false
+             ,start: false};
    var genEdge = F3(function (nodes,
    _v16,
    edge) {
@@ -126,7 +128,7 @@ Elm.EdgeHelper.make = function (_elm) {
                                  ,_1: _U.eq(n.name,
                                  end) ? n : _v20._1};}
                        _U.badCase($moduleName,
-                       "on line 25, column 47 to 110");
+                       "on line 27, column 47 to 110");
                     }();
                  });
                  var $ = A3($List.foldl,
@@ -162,7 +164,7 @@ Elm.EdgeHelper.make = function (_elm) {
                             return _._4._0;}
                          break;}
                     _U.badCase($moduleName,
-                    "on line 29, column 59 to 109");
+                    "on line 31, column 59 to 109");
                  }();
                  var b = function () {
                     switch (_.ctor)
@@ -172,7 +174,7 @@ Elm.EdgeHelper.make = function (_elm) {
                             return _._4._1;}
                          break;}
                     _U.badCase($moduleName,
-                    "on line 29, column 59 to 109");
+                    "on line 31, column 59 to 109");
                  }();
                  var mdx = function () {
                     switch (_.ctor)
@@ -181,7 +183,7 @@ Elm.EdgeHelper.make = function (_elm) {
                          {case "_Tuple2": return _._1;}
                          break;}
                     _U.badCase($moduleName,
-                    "on line 29, column 59 to 109");
+                    "on line 31, column 59 to 109");
                  }();
                  var mdy = function () {
                     switch (_.ctor)
@@ -190,7 +192,7 @@ Elm.EdgeHelper.make = function (_elm) {
                          {case "_Tuple2": return _._2;}
                          break;}
                     _U.badCase($moduleName,
-                    "on line 29, column 59 to 109");
+                    "on line 31, column 59 to 109");
                  }();
                  var points = function () {
                     switch (_.ctor)
@@ -199,7 +201,7 @@ Elm.EdgeHelper.make = function (_elm) {
                          {case "_Tuple2": return _._0;}
                          break;}
                     _U.badCase($moduleName,
-                    "on line 29, column 59 to 109");
+                    "on line 31, column 59 to 109");
                  }();
                  var th = function () {
                     switch (_.ctor)
@@ -208,7 +210,7 @@ Elm.EdgeHelper.make = function (_elm) {
                          {case "_Tuple2": return _._3;}
                          break;}
                     _U.badCase($moduleName,
-                    "on line 29, column 59 to 109");
+                    "on line 31, column 59 to 109");
                  }();
                  var txt = $Graphics$Collage.move({ctor: "_Tuple2"
                                                   ,_0: mdx - $Basics.toFloat(_v16._0) / 2
@@ -227,7 +229,7 @@ Elm.EdgeHelper.make = function (_elm) {
                  _L.fromArray([pt,txt,tri]));
               }();}
          _U.badCase($moduleName,
-         "between lines 24 and 38");
+         "between lines 26 and 40");
       }();
    });
    _elm.EdgeHelper.values = {_op: _op

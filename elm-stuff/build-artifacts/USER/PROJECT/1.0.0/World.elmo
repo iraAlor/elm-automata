@@ -18,6 +18,27 @@ Elm.World.make = function (_elm) {
    var init = {ctor: "_Tuple2"
               ,_0: _L.fromArray([])
               ,_1: _L.fromArray([])};
+   var setStart = F2(function (ls,
+   str) {
+      return A2($List.map,
+      function (el) {
+         return _U.replace([["start"
+                            ,_U.eq(el.name,str)]],
+         el);
+      },
+      ls);
+   });
+   var setFin = F3(function (bool,
+   ls,
+   mt) {
+      return A2($List.map,
+      function (el) {
+         return _U.eq(el.name,
+         mt) ? _U.replace([["fin",bool]],
+         el) : el;
+      },
+      ls);
+   });
    var listPatt = F3(function (comp,
    el,
    _v0) {
@@ -41,7 +62,7 @@ Elm.World.make = function (_elm) {
                         _v0._1)};
               }();}
          _U.badCase($moduleName,
-         "between lines 75 and 77");
+         "between lines 79 and 81");
       }();
    });
    var addPatt = F6(function (comp,
@@ -70,7 +91,7 @@ Elm.World.make = function (_elm) {
                  base,
                  nls);}
             _U.badCase($moduleName,
-            "between lines 81 and 83");
+            "between lines 85 and 87");
          }();
       }();
    });
@@ -87,7 +108,7 @@ Elm.World.make = function (_elm) {
             switch (_.ctor)
             {case "_Tuple2": return _._1;}
             _U.badCase($moduleName,
-            "on line 90, column 33 to 76");
+            "on line 94, column 33 to 76");
          }();
          return acc;
       }();
@@ -110,7 +131,7 @@ Elm.World.make = function (_elm) {
                          ,_1: _v10._1 || _U.eq(el.name,
                          n1)};}
                _U.badCase($moduleName,
-               "on line 71, column 62 to 93");
+               "on line 75, column 62 to 93");
             }();
          }),
          {ctor: "_Tuple2"
@@ -209,11 +230,11 @@ Elm.World.make = function (_elm) {
                                   ,_1: A2($String.cons,el,_v14._1)
                                   ,_2: _v14._2};}
                       _U.badCase($moduleName,
-                      "between lines 50 and 55");
+                      "between lines 54 and 59");
                    }();}
               break;}
          _U.badCase($moduleName,
-         "between lines 50 and 55");
+         "between lines 54 and 59");
       }();
    });
    var convertToE = function (str) {
@@ -231,13 +252,13 @@ Elm.World.make = function (_elm) {
             switch (_.ctor)
             {case "_Tuple3": return _._0;}
             _U.badCase($moduleName,
-            "on line 56, column 34 to 73");
+            "on line 60, column 34 to 73");
          }();
          var tk = function () {
             switch (_.ctor)
             {case "_Tuple3": return _._1;}
             _U.badCase($moduleName,
-            "on line 56, column 34 to 73");
+            "on line 60, column 34 to 73");
          }();
          var ttk = A2($String.split,
          ",",
@@ -271,10 +292,10 @@ Elm.World.make = function (_elm) {
                       Math.pow($Basics.round(rad),
                       2)) < 1;}
                  _U.badCase($moduleName,
-                 "on line 28, column 29 to 66");
+                 "on line 32, column 29 to 66");
               }();}
          _U.badCase($moduleName,
-         "on line 28, column 29 to 66");
+         "on line 32, column 29 to 66");
       }();
    });
    var helper = F3(function (_v41,
@@ -307,10 +328,10 @@ Elm.World.make = function (_elm) {
                                 _v42._1)};
                       }();}
                  _U.badCase($moduleName,
-                 "between lines 32 and 34");
+                 "between lines 36 and 38");
               }();}
          _U.badCase($moduleName,
-         "between lines 32 and 34");
+         "between lines 36 and 38");
       }();
    });
    var helpy2 = F2(function (_v50,
@@ -333,7 +354,7 @@ Elm.World.make = function (_elm) {
                               break;}
                          break;}
                     _U.badCase($moduleName,
-                    "on line 23, column 48 to 69");
+                    "on line 27, column 48 to 69");
                  }();
                  var my = function () {
                     switch (_.ctor)
@@ -346,7 +367,7 @@ Elm.World.make = function (_elm) {
                               break;}
                          break;}
                     _U.badCase($moduleName,
-                    "on line 23, column 48 to 69");
+                    "on line 27, column 48 to 69");
                  }();
                  var px = function () {
                     switch (_.ctor)
@@ -359,7 +380,7 @@ Elm.World.make = function (_elm) {
                               break;}
                          break;}
                     _U.badCase($moduleName,
-                    "on line 23, column 48 to 69");
+                    "on line 27, column 48 to 69");
                  }();
                  var py = function () {
                     switch (_.ctor)
@@ -372,7 +393,7 @@ Elm.World.make = function (_elm) {
                               break;}
                          break;}
                     _U.badCase($moduleName,
-                    "on line 23, column 48 to 69");
+                    "on line 27, column 48 to 69");
                  }();
                  var $ = {ctor: "_Tuple2"
                          ,_0: _v50._0 - px
@@ -391,7 +412,7 @@ Elm.World.make = function (_elm) {
                  node);
               }();}
          _U.badCase($moduleName,
-         "between lines 23 and 25");
+         "between lines 27 and 29");
       }();
    });
    var find = F2(function (co,ls) {
@@ -439,7 +460,7 @@ Elm.World.make = function (_elm) {
                case "Nothing":
                return setToF(nls);}
             _U.badCase($moduleName,
-            "between lines 44 and 46");
+            "between lines 48 and 50");
          }();
       }();
    });
@@ -477,11 +498,13 @@ Elm.World.make = function (_elm) {
                ,coord: {ctor: "_Tuple2"
                        ,_0: 10
                        ,_1: 10}
+               ,fin: false
                ,name: ""
                ,pCoor: {ctor: "_Tuple2"
                        ,_0: 0
                        ,_1: 0}
-               ,pre: false};
+               ,pre: false
+               ,start: false};
    var conNode = function (na) {
       return _U.replace([["name"
                          ,na]],
@@ -517,7 +540,7 @@ Elm.World.make = function (_elm) {
                                  switch (_.ctor)
                                  {case "_Tuple2": return _._0;}
                                  _U.badCase($moduleName,
-                                 "on line 96, column 45 to 57");
+                                 "on line 103, column 45 to 57");
                               }();
                               return A2(delItem,
                               function (el) {
@@ -560,12 +583,44 @@ Elm.World.make = function (_elm) {
                                      ,_1: action._0._0._1}) : setToF(_v86._0)
                                      ,_1: _v86._1};}
                            break;}
-                      break;}
+                      break;
+                    case "RemFinal":
+                    return {ctor: "_Tuple2"
+                           ,_0: A3(setFin,
+                           false,
+                           _v86._0,
+                           action._0)
+                           ,_1: _v86._1};
+                    case "Save":
+                    return {ctor: "_Tuple2"
+                           ,_0: _v86._0
+                           ,_1: _v86._1};
+                    case "SetFinal":
+                    return {ctor: "_Tuple2"
+                           ,_0: A3(setFin,
+                           true,
+                           _v86._0,
+                           action._0)
+                           ,_1: _v86._1};
+                    case "SetStart":
+                    return {ctor: "_Tuple2"
+                           ,_0: A2(setStart,
+                           _v86._0,
+                           action._0)
+                           ,_1: _v86._1};
+                    case "TestRE":
+                    return {ctor: "_Tuple2"
+                           ,_0: _v86._0
+                           ,_1: _v86._1};
+                    case "TestStr":
+                    return {ctor: "_Tuple2"
+                           ,_0: _v86._0
+                           ,_1: _v86._1};}
                  _U.badCase($moduleName,
-                 "between lines 93 and 100");
+                 "between lines 100 and 113");
               }();}
          _U.badCase($moduleName,
-         "between lines 93 and 100");
+         "between lines 100 and 113");
       }();
    });
    var runner = A3($Signal.foldp,
@@ -579,15 +634,19 @@ Elm.World.make = function (_elm) {
              ,route: a
              ,token: b};
    });
-   var Node = F4(function (a,
+   var Node = F6(function (a,
    b,
    c,
-   d) {
+   d,
+   e,
+   f) {
       return {_: {}
              ,coord: a
+             ,fin: f
              ,name: d
              ,pCoor: c
-             ,pre: b};
+             ,pre: b
+             ,start: e};
    });
    _elm.World.values = {_op: _op
                        ,runner: runner
