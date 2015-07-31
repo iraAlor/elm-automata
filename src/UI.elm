@@ -25,11 +25,22 @@ edgeIMan = Signal.mailbox False
 edgeDMan = Signal.mailbox False
 nodeDMan = Signal.mailbox False
 
+addFinnB = Signal.mailbox False
+remFinnB = Signal.mailbox Falss
+setStarB = Signal.mailbox False
+remStarB - Signal.mailbox False
+
+
 --MailBox for each text field
 nodeIF = Signal.mailbox noContent
 nodeDF = Signal.mailbox noContent
 edgeIF = Signal.mailbox noContent
 edgeDF = Signal.mailbox noContent
+
+addFin = Signal.mailbox noContent
+remFin = Signal.mailbox noContent
+setStar= Signal.mailbox noContent
+remStar= Signal.mailbox noContent
 
 --buttons 
 buttons = [ button (Signal.message  nodeIMan.address True) "Add Node"

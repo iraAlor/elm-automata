@@ -9,17 +9,23 @@ import Color exposing(..)
 import List
 import Window exposing(dimensions)
 import EdgeHelper exposing(genEdge)
+import Text exposing(fromString)
 scene (w,h) locs edges =
+    let drawText node =  let (x,y) = node.coord in 
+    fromString node.name    
+    |>text
+    |>move (toFloat x - toFloat w/2,toFloat h/2 - toFloat y)
+    in
     let drawCircle node = let (x,y) = node.coord in
     circle rad
-    |> filled (hsla (toFloat x) 0.9 0.6 0.7)
+    |> filled (blue)
     |> move (toFloat x - toFloat w / 2, toFloat h / 2 - toFloat y)
-    |> rotate (toFloat x)
+   -- |> rotate (toFloat x)
     in
     let drawEdge =genEdge locs (w,h)
     in
     layers
-    ((List.map drawEdge edges)++[collage w h (List.map drawCircle locs)])
+    ((List.map drawEdge edges)++[collage w h (List.map drawCircle locs)]++[collage w h (List.map drawText locs)])
 
 render (state,ed) a b c d (w,h) =
     let nodes = scene (w,h) state  ed in
