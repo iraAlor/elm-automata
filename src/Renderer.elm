@@ -2,7 +2,8 @@ module Renderer where
 import Signal exposing(..)
 import Graphics.Element exposing (..)
 import Graphics.Collage exposing(..)
-import World exposing(runner,Node,rad)
+import World exposing(runner,rad)
+import Common exposing (Node,Edge)
 import UI exposing(..)
 import Mouse exposing(..)
 import Color exposing(..)
@@ -10,6 +11,57 @@ import List
 import Window exposing(dimensions)
 import EdgeHelper exposing(genEdge)
 import Text exposing(fromString)
+
+
+import Task exposing (..)
+import Json.Encode exposing(..)
+
+
+
+
+
+
+
+saveSig = Signal.sampleOn saveButt.signal runner
+
+encodeNode n = object
+               [ ("name", string n.name)
+               , ("start", bool n.start)
+               , ("final", bool n.fin)
+               ]
+conTL (a,b)= list [string a, string b] 
+convTok ls = list (List.map (\x-> string x) ls)
+encodeEdge e = object
+             [ ("route",  conTL e.route )
+             , ("token",  convTok e.token)
+             ]
+
+encodeGraph (nodes,edges) =
+  let nl =  List.map encodeNode nodes |> list
+      ne =  List.map encodeEdge edges |> list
+      gr = object [ ("nodes",nl),("edges",ne)]
+  in encode 0 gr 
+
+
+
+port conn: Signal String
+port conn = Signal.map encodeGraph saveSig
+
+helpy = Signal.map encodeGraph runner
+helpy2 = Signal.map2 (\a b ->(a,b)) 
+getSig t = let helpy = Signal.map encodeGraph runner 
+               h2 = Signal.map2 (\a b ->(a,b)) t
+               bs = Signal.sampleOn t
+               in
+               bs(h2  helpy)
+
+
+port tStr: Signal (String,String)
+port tStr = getSig testStrSig
+port tRe: Signal (String,String)
+port tRe = getSig testReSig
+
+
 scene (w,h) locs edges =
     let drawText node =  let (x,y) = node.coord in 
     fromString (node.name)   
@@ -42,16 +94,16 @@ scene (w,h) locs edges =
       [collage w h (List.map drawFin finS)]++[collage w h (List.map drawTri star)]
       ++[collage w h (List.map drawText locs)])
 
-render (state,ed) a b c d e f g i j(w,h) =
+render (state,ed) ls1 ls2 ls3 (w,h) =
     let nodes = scene (w,h) state  ed in
     let helper l ls = flow down (List.map2 (\el1 el2-> flow right ([el1]++[el2])) l ls ) in
     let cen   = flow outward ([(background w h)]++[nodes]) in 
-    let g1    = helper buttons [a,b,c,d] in
-    let g2    = helper buttons2 [e,f,g] in
-    let g3    = helper buttons3 [i,j] in
+    let g1    = helper buttons ls1 in
+    let g2    = helper buttons2 ls2 in
+    let g3    = helper buttons3 ls3 in
     let g4    = buttons4 in
     let cont  = flow right ([g1]++[g2]++[g3]++g4) in
     flow  down ([cen]++[cont])
 
 
-main = render<~runner~aNField~aEField~dEField~dNField~startFd~finalAd~finalRm~testStrF~testReF~dimensions
+main = render<~runner~fields~fields2~fields3~dimensions

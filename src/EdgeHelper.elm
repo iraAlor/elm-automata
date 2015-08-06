@@ -1,7 +1,8 @@
 module EdgeHelper(genEdge) where
 import Graphics.Collage exposing(..)
 import Text exposing(fromString)
-import World exposing(Node,Edge,rad)
+import World exposing(rad)
+import Common exposing (Node,Edge)
 import List
 import String exposing(join)
 import Color exposing (red)

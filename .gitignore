@@ -1,2 +1,20 @@
- elm-stuff/build-artifacts/*
- elm.js
+elm-stuff/build-artifacts/*
+elm.js
+./eHelper.elm
+./e1Helper.elm
+dist
+cabal-dev
+*.o
+*.hi
+*.chi
+*.chs.h
+*.dyn_o
+*.dyn_hi
+.hpc
+.hsenv
+.cabal-sandbox/
+cabal.sandbox.config
+*.prof
+*.aux
+*.hp
+.stack-work/

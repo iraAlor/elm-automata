@@ -1,18 +1,9 @@
-module World(runner,Node,Edge,rad)  where
+module World(runner,rad)  where
+import Common exposing(Node,Edge)
 import UI exposing(..)
 import Signal exposing(..) 
 import List exposing(foldl) 
 import String 
-type alias Node  = {  coord : (Int,Int)
-                   ,  pre  : Bool
-                   ,  pCoor : (Int,Int)
-                   ,  name : String
-                   ,  start: Bool
-                   ,  fin  : Bool
-                   }
-type alias Edge = { route:(String,String)
-                  , token:List String
-                  }
 start = { coord = (10,10)
         , pre   = False
         , pCoor = (0,0)
@@ -23,6 +14,7 @@ start = { coord = (10,10)
 sEdge = {route = ("","")
         ,token = []
         }
+
 
 helpy2 (cx,cy) node = let ((px,py),(mx,my)) = (node.pCoor,node.coord) in
                       let (dx,dy) = ((cx-px),(cy-py)) in
@@ -91,25 +83,30 @@ addNode name  state     = addPatt compNode conNode upNode (\a b->a::b) state nam
 addEdge strE  state ins = addPatt compEdge conEdge upEdge (\a b ->a::b)   state strE
 
 
-delItem cmp ls  = let (_,acc) = List.foldl (listPatt (cmp)) (Nothing,[]) ls in
-                     acc
+
+delEdge str ls = let (rt,token) = convertToE str in
+                 let (el,rest)  = List.partition (\el->el.route==rt) ls in
+                 let helper =List.filter (\el-> not (List.member el token))  in
+                 if [""] == token  then rest 
+                 else rest++(List.map (\el->{el|token<-(helper el.token)}) el)
+
+delNode ls str = List.filter (\x->x.name/=str) ls
+delENode ls str = List.filter (\x->let (a,b) = x.route in a /=str && b/=str) ls
 setFin bool ls mt = List.map (\el-> (if el.name == mt then {el|fin<-bool} 
                                              else el)) ls
 setStart ls str =   List.map (\el->{el|start<-(el.name == str)}) ls
+
 updateC action (state,ed) =
     case action of
          InsertNode  v -> (addNode v state,ed)
-         DeleteNode v -> (delItem (\el-> el.name == v) state,ed) 
-         DeleteEdge v -> (state,let (rt,_) =convertToE v in delItem (\el->el.route == rt) ed)
+         DeleteNode v -> (delNode state v ,delENode ed v) 
+         DeleteEdge v -> (state,delEdge v ed)
          InsertEdge v -> (state,addEdge v ed state)
          Press ((x,y),pr,ins) -> (if ins && pr then helpy state (( x),( y)) 
                                               else setToF state,ed)  
-         Save -> (state,ed)
          SetStart v -> (setStart state v ,ed) 
          SetFinal v -> (setFin True state v,ed)
          RemFinal v -> (setFin False state v,ed)
-         TestRE   v -> (state,ed)
-         TestStr  v -> (state,ed)
                                                                 
 
 
