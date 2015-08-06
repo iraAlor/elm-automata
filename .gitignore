@@ -1,4 +1,5 @@
 elm-stuff/build-artifacts/*
+elm-stuff/
 elm.js
 build/elm.js
 build/bend

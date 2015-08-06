@@ -1,5 +1,5 @@
 .PHONY:build
 build:
-	elm-make *.elm 
+	elm-make --yes *.elm 
 	mv elm.js ../../build/
 
