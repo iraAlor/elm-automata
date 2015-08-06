@@ -1,0 +1,321 @@
+Elm.Renderer = Elm.Renderer || {};
+Elm.Renderer.make = function (_elm) {
+   "use strict";
+   _elm.Renderer = _elm.Renderer || {};
+   if (_elm.Renderer.values)
+   return _elm.Renderer.values;
+   var _op = {},
+   _N = Elm.Native,
+   _U = _N.Utils.make(_elm),
+   _L = _N.List.make(_elm),
+   $moduleName = "Renderer",
+   $Basics = Elm.Basics.make(_elm),
+   $Color = Elm.Color.make(_elm),
+   $EdgeHelper = Elm.EdgeHelper.make(_elm),
+   $Graphics$Collage = Elm.Graphics.Collage.make(_elm),
+   $Graphics$Element = Elm.Graphics.Element.make(_elm),
+   $Json$Encode = Elm.Json.Encode.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Signal = Elm.Signal.make(_elm),
+   $Text = Elm.Text.make(_elm),
+   $UI = Elm.UI.make(_elm),
+   $Window = Elm.Window.make(_elm),
+   $World = Elm.World.make(_elm);
+   var scene = F3(function (_v0,
+   locs,
+   edges) {
+      return function () {
+         switch (_v0.ctor)
+         {case "_Tuple2":
+            return function () {
+                 var drawText = function (node) {
+                    return function () {
+                       var $ = node.coord,
+                       x = $._0,
+                       y = $._1;
+                       return $Graphics$Collage.move({ctor: "_Tuple2"
+                                                     ,_0: $Basics.toFloat(x) - $Basics.toFloat(_v0._0) / 2
+                                                     ,_1: $Basics.toFloat(_v0._1) / 2 - $Basics.toFloat(y)})($Graphics$Collage.text($Text.fromString(node.name)));
+                    }();
+                 };
+                 var drawCircle = function (node) {
+                    return function () {
+                       var $ = node.coord,
+                       x = $._0,
+                       y = $._1;
+                       return $Graphics$Collage.move({ctor: "_Tuple2"
+                                                     ,_0: $Basics.toFloat(x) - $Basics.toFloat(_v0._0) / 2
+                                                     ,_1: $Basics.toFloat(_v0._1) / 2 - $Basics.toFloat(y)})($Graphics$Collage.filled($Color.blue)($Graphics$Collage.circle($World.rad)));
+                    }();
+                 };
+                 var finS = A2($List.filter,
+                 function (el) {
+                    return el.fin;
+                 },
+                 locs);
+                 var drawFin = function (node) {
+                    return function () {
+                       var $ = node.coord,
+                       x = $._0,
+                       y = $._1;
+                       return $Graphics$Collage.move({ctor: "_Tuple2"
+                                                     ,_0: $Basics.toFloat(x) - $Basics.toFloat(_v0._0) / 2
+                                                     ,_1: $Basics.toFloat(_v0._1) / 2 - $Basics.toFloat(y)})($Graphics$Collage.filled($Color.lightBlue)($Graphics$Collage.circle($World.rad * 0.5)));
+                    }();
+                 };
+                 var star = A2($List.filter,
+                 function (el) {
+                    return el.start;
+                 },
+                 locs);
+                 var drawTri = function (node) {
+                    return function () {
+                       var $ = node.coord,
+                       x = $._0,
+                       y = $._1;
+                       return $Graphics$Collage.move({ctor: "_Tuple2"
+                                                     ,_0: $Basics.toFloat(x) - $World.rad - $Basics.toFloat(_v0._0) / 2
+                                                     ,_1: $Basics.toFloat(_v0._1) / 2 - $Basics.toFloat(y)})($Graphics$Collage.rotate($Basics.degrees(0))($Graphics$Collage.filled($Color.orange)(A2($Graphics$Collage.ngon,
+                       3,
+                       $World.rad / 3))));
+                    }();
+                 };
+                 var drawEdge = A2($EdgeHelper.genEdge,
+                 locs,
+                 {ctor: "_Tuple2"
+                 ,_0: _v0._0
+                 ,_1: _v0._1});
+                 return $Graphics$Element.layers(A2($Basics._op["++"],
+                 A2($List.map,drawEdge,edges),
+                 A2($Basics._op["++"],
+                 _L.fromArray([A3($Graphics$Collage.collage,
+                 _v0._0,
+                 _v0._1,
+                 A2($List.map,
+                 drawCircle,
+                 locs))]),
+                 A2($Basics._op["++"],
+                 _L.fromArray([A3($Graphics$Collage.collage,
+                 _v0._0,
+                 _v0._1,
+                 A2($List.map,drawFin,finS))]),
+                 A2($Basics._op["++"],
+                 _L.fromArray([A3($Graphics$Collage.collage,
+                 _v0._0,
+                 _v0._1,
+                 A2($List.map,drawTri,star))]),
+                 _L.fromArray([A3($Graphics$Collage.collage,
+                 _v0._0,
+                 _v0._1,
+                 A2($List.map,
+                 drawText,
+                 locs))]))))));
+              }();}
+         _U.badCase($moduleName,
+         "between lines 66 and 95");
+      }();
+   });
+   var render = F5(function (_v4,
+   ls1,
+   ls2,
+   ls3,
+   _v5) {
+      return function () {
+         switch (_v5.ctor)
+         {case "_Tuple2":
+            return function () {
+                 switch (_v4.ctor)
+                 {case "_Tuple2":
+                    return function () {
+                         var nodes = A3(scene,
+                         {ctor: "_Tuple2"
+                         ,_0: _v5._0
+                         ,_1: _v5._1},
+                         _v4._0,
+                         _v4._1);
+                         var helper = F2(function (l,
+                         ls) {
+                            return A2($Graphics$Element.flow,
+                            $Graphics$Element.down,
+                            A3($List.map2,
+                            F2(function (el1,el2) {
+                               return A2($Graphics$Element.flow,
+                               $Graphics$Element.right,
+                               A2($Basics._op["++"],
+                               _L.fromArray([el1]),
+                               _L.fromArray([el2])));
+                            }),
+                            l,
+                            ls));
+                         });
+                         var cen = A2($Graphics$Element.flow,
+                         $Graphics$Element.outward,
+                         A2($Basics._op["++"],
+                         _L.fromArray([A2($UI.background,
+                         _v5._0,
+                         _v5._1)]),
+                         _L.fromArray([nodes])));
+                         var g1 = A2(helper,
+                         $UI.buttons,
+                         ls1);
+                         var g2 = A2(helper,
+                         $UI.buttons2,
+                         ls2);
+                         var g3 = A2(helper,
+                         $UI.buttons3,
+                         ls3);
+                         var g4 = $UI.buttons4;
+                         var cont = A2($Graphics$Element.flow,
+                         $Graphics$Element.right,
+                         A2($Basics._op["++"],
+                         _L.fromArray([g1]),
+                         A2($Basics._op["++"],
+                         _L.fromArray([g2]),
+                         A2($Basics._op["++"],
+                         _L.fromArray([g3]),
+                         g4))));
+                         return A2($Graphics$Element.flow,
+                         $Graphics$Element.down,
+                         A2($Basics._op["++"],
+                         _L.fromArray([cen]),
+                         _L.fromArray([cont])));
+                      }();}
+                 _U.badCase($moduleName,
+                 "between lines 98 and 106");
+              }();}
+         _U.badCase($moduleName,
+         "between lines 98 and 106");
+      }();
+   });
+   var main = A2($Signal._op["~"],
+   A2($Signal._op["~"],
+   A2($Signal._op["~"],
+   A2($Signal._op["~"],
+   A2($Signal._op["<~"],
+   render,
+   $World.runner),
+   $UI.fields),
+   $UI.fields2),
+   $UI.fields3),
+   $Window.dimensions);
+   var helpy2 = $Signal.map2(F2(function (a,
+   b) {
+      return {ctor: "_Tuple2"
+             ,_0: a
+             ,_1: b};
+   }));
+   var convTok = function (ls) {
+      return $Json$Encode.list(A2($List.map,
+      function (x) {
+         return $Json$Encode.string(x);
+      },
+      ls));
+   };
+   var conTL = function (_v12) {
+      return function () {
+         switch (_v12.ctor)
+         {case "_Tuple2":
+            return $Json$Encode.list(_L.fromArray([$Json$Encode.string(_v12._0)
+                                                  ,$Json$Encode.string(_v12._1)]));}
+         _U.badCase($moduleName,
+         "on line 32, column 14 to 39");
+      }();
+   };
+   var encodeEdge = function (e) {
+      return $Json$Encode.object(_L.fromArray([{ctor: "_Tuple2"
+                                               ,_0: "route"
+                                               ,_1: conTL(e.route)}
+                                              ,{ctor: "_Tuple2"
+                                               ,_0: "token"
+                                               ,_1: convTok(e.token)}]));
+   };
+   var encodeNode = function (n) {
+      return $Json$Encode.object(_L.fromArray([{ctor: "_Tuple2"
+                                               ,_0: "name"
+                                               ,_1: $Json$Encode.string(n.name)}
+                                              ,{ctor: "_Tuple2"
+                                               ,_0: "start"
+                                               ,_1: $Json$Encode.bool(n.start)}
+                                              ,{ctor: "_Tuple2"
+                                               ,_0: "final"
+                                               ,_1: $Json$Encode.bool(n.fin)}]));
+   };
+   var encodeGraph = function (_v16) {
+      return function () {
+         switch (_v16.ctor)
+         {case "_Tuple2":
+            return function () {
+                 var ne = $Json$Encode.list(A2($List.map,
+                 encodeEdge,
+                 _v16._1));
+                 var nl = $Json$Encode.list(A2($List.map,
+                 encodeNode,
+                 _v16._0));
+                 var gr = $Json$Encode.object(_L.fromArray([{ctor: "_Tuple2"
+                                                            ,_0: "nodes"
+                                                            ,_1: nl}
+                                                           ,{ctor: "_Tuple2"
+                                                            ,_0: "edges"
+                                                            ,_1: ne}]));
+                 return A2($Json$Encode.encode,
+                 0,
+                 gr);
+              }();}
+         _U.badCase($moduleName,
+         "between lines 40 and 43");
+      }();
+   };
+   var helpy = A2($Signal.map,
+   encodeGraph,
+   $World.runner);
+   var getSig = function (t) {
+      return function () {
+         var bs = $Signal.sampleOn(t);
+         var h2 = A2($Signal.map2,
+         F2(function (a,b) {
+            return {ctor: "_Tuple2"
+                   ,_0: a
+                   ,_1: b};
+         }),
+         t);
+         var helpy = A2($Signal.map,
+         encodeGraph,
+         $World.runner);
+         return bs(h2(helpy));
+      }();
+   };
+   var tStr = Elm.Native.Port.make(_elm).outboundSignal("tStr",
+   function (v) {
+      return [v._0,v._1];
+   },
+   getSig($UI.testStrSig));
+   var tRe = Elm.Native.Port.make(_elm).outboundSignal("tRe",
+   function (v) {
+      return [v._0,v._1];
+   },
+   getSig($UI.testReSig));
+   var saveSig = A2($Signal.sampleOn,
+   $UI.saveButt.signal,
+   $World.runner);
+   var conn = Elm.Native.Port.make(_elm).outboundSignal("conn",
+   function (v) {
+      return v;
+   },
+   A2($Signal.map,
+   encodeGraph,
+   saveSig));
+   _elm.Renderer.values = {_op: _op
+                          ,saveSig: saveSig
+                          ,encodeNode: encodeNode
+                          ,conTL: conTL
+                          ,convTok: convTok
+                          ,encodeEdge: encodeEdge
+                          ,encodeGraph: encodeGraph
+                          ,helpy: helpy
+                          ,helpy2: helpy2
+                          ,getSig: getSig
+                          ,scene: scene
+                          ,render: render
+                          ,main: main};
+   return _elm.Renderer.values;
+};

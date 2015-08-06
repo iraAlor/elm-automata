@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="UTF-8"><title>Automata</title><style>html, head, body { padding:0; margin:0; }
+body { font-family: calibri, helvetica, arial, sans-serif; }
+a:link { text-decoration: none; color: rgb(15,102,230); }
+a:visited { text-decoration: none; }
+a:active { text-decoration: none; }
+a:hover { text-decoration: underline; color: rgb(234,21,122); }
+html,body { height: 100%; margin: 0px; }
+</style></head><body><script src="elm.js"></script>
+<script type ="text/javascript">
+
+var runningElmModule = Elm.fullscreen(Elm.Renderer);
+
+function httpGet(url){
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", theUrl, false );
+    xmlHttp.send( null );
+    return xmlHttp.responseText;
+}
+function download(str){
+  window.location = 'http://localhost:3000/download/'+str;
+}
+function testString(val){
+  var url = 'http://localhost:3000/testStr/'+val[1]+'/'+val[0]
+  /
+     res = httpGet(url)
+     DO STUFF IF IT WORKS
+  /
+}   
+function testRegular(val){
+  var url = 'http://localhost:3000/testRe/'+val[1]+'/'+val[0]
+  /
+     res = httpGet(url)
+     REFER TO ABOVE IF YOU WANT
+  /
+}                                 
+                                                                                    
+runningElmModule.ports.conn.subscribe(download)
+
+runningElmModule.ports.tStr.subscribe(testString)
+runningElmModule.ports.tRe.subscribe(testRegular)
+
+
+</script></body>
+<html>

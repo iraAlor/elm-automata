@@ -1,5 +1,8 @@
 elm-stuff/build-artifacts/*
 elm.js
+build/elm.js
+build/bend
+client_session_key.aes
 ./eHelper.elm
 ./e1Helper.elm
 dist
