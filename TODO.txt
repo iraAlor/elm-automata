@@ -3,3 +3,7 @@ Improve edges
 Improve layout
 Improve size
 Improve everythin please
+
+Test backend
+Implement regular expression comparison
+Implement upload feature

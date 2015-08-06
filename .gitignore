@@ -1,4 +1,6 @@
 elm-stuff/build-artifacts/*
+./e1Helper.elm
+./eHelper.elm
 elm-stuff/
 elm.js
 build/elm.js
