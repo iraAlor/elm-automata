@@ -1,5 +1,8 @@
 elm-stuff/build-artifacts/*
+frontend/src/elmReactor/*
 e1Helper.elm
+test.html
+.DS_STORE
 eHelper.elm
 elm-stuff/
 elm.js

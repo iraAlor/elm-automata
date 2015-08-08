@@ -1,5 +1,5 @@
-module UI(testStrSig, testReSig,saveButt,buttons,buttons2,buttons3,buttons4,Actions(InsertNode,InsertEdge,DeleteEdge,DeleteNode,Press,Save,SetStart,SetFinal,RemFinal,TestRE,TestStr),mySig,fields,fields2,fields3,background) where
-
+module UI(upButt,testStrSig, testReSig,saveButt,buttons,buttons2,buttons3,buttons4,Actions(..),mySig,fields,fields2,fields3,background) where
+--InsertNode,InsertEdge,DeleteEdge,DeleteNode,Press,Save,SetStart,SetFinal,RemFinal,TestRE,TestStr,NewWorld
 import Signal exposing (..)
 import Graphics.Input exposing (button,hoverable)
 import Graphics.Input.Field exposing (..)
@@ -8,20 +8,19 @@ import Graphics.Element exposing (..)
 import Mouse exposing (..)
 import Graphics.Collage exposing (..)
 import Common exposing(Node,Edge)
-import Task exposing(..)
+import Html exposing (input,output,div)
+import Html.Attributes exposing (..)
 type Actions  = InsertNode String 
                |InsertEdge String
                |DeleteNode String
                |DeleteEdge String
                |Press      ((Int,Int),Bool,Bool)
-               |Save
                |SetStart String
                |SetFinal String
                |RemFinal String
                |TestRE   String
                |TestStr  String
-               |Yes
-               |No
+               |NewWorld (List Node,List Edge,Bool)
 
 --MailBox indicating if mouse is inside a particular element
 inside = Signal.mailbox False
@@ -40,7 +39,6 @@ testReB  = Signal.mailbox False
 testStrB = Signal.mailbox False
 
 saveButt = Signal.mailbox False
-results  = Signal.mailbox ([],[])
 
 --MailBox for each text field
 nodeIF = Signal.mailbox noContent
@@ -73,7 +71,15 @@ buttons3=[
          , button (Signal.message testReB.address True) "Compare to RE"
          ]     
 
-buttons4=[button (Signal.message saveButt.address True) "Save"]
+
+inp = input [type' "file",id "files",name"files[]",multiple True][]
+out = output [id "list"][]
+upButt =  Html.toElement 0 0 (div [] [inp,out])
+buttons4=[button (Signal.message saveButt.address True) "Save"
+         ,upButt
+         ]
+
+
 --Makes text field empty when its corresponding button has been pressed
 pro sig butt = merge (sampleOn butt (constant noContent)) sig
 --Boilerplate required to link a text box and button

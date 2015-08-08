@@ -3,7 +3,35 @@ Improve edges
 Improve layout
 Improve size
 Improve everythin please
+Fix upload file button
+----Possible Solution
+---Make opacity zero and spawn some garbage
+sls = [("display","bloc")
+      ,("width","100px")
+      ,("height","20px")
+      ,("overflow","hidden")
+      ]
+      
+bls = [("width","110px")
+      ,("height","30px")
+      ,("position","relative")
+      ,("top","-5px")
+      ,("left","-5px")
+      ]
+fls =[
+     ("opacity","0")
+     ,("filter","aplha(opacity:0);")
+     ,("position","relative;")
+     ,("top","-40px")
+     ,("left","-20px")
+     ]
 
-Test backend
+
+inp = input [type' "file",id "files",name"files[]"][]                              
+out = output [id "list"][]     
+cov = button [style bls] [a [href "javascript: void(0)"][] ]
+upButt =  Html.toElement 0 0 (div [ ] [inp,out]) 
+
+
+Test backend i.e. test string
 Implement regular expression comparison
-Implement upload feature

@@ -27,6 +27,7 @@ data App = App
 data Node = Node { name:: Text
                  , start :: Bool
                  , final :: Bool
+                 , coord :: (Int,Int)
                  }
 
 data Edge = Edge {route::(Text,Text)
@@ -48,6 +49,7 @@ mkYesod "App" [parseRoutes|
 /download/#Text DownloadR GET
 /testRe/#Text/#Text TestReR GET
 /testStr/#Text/#Text TestStrR GET
+/elm.js ElmR    GET
 |]
 
 
@@ -56,6 +58,10 @@ getHomeR = do
   s <-liftIO $ readFile "temp.html"
   let ts = Text.pack s
   return $ TypedContent  typeHtml $ toContent ts
+getElmR = do
+  s <-liftIO$ readFile "elm.js"
+  let ts = Text.pack s
+  return $ TypedContent typeJavascript $ toContent ts
 
 getTestReR jMa re = do
     addHeader "Content-Disposition" "attachment; filename=\"auto\"" 
@@ -77,7 +83,7 @@ step (ed,st) str
     |0 == Text.length str = st
     | otherwise = let (hd,tl) = (Text.head str,Text.tail str)
                   in
-                  step (ed,ed ! (st,hd)) tl
+                  step (ed,ed ! (st,(Text.singleton hd))) tl
 
 executeAut (st,ed,fin,sta) str = let last = step (ed,sta) str 
                                  in
@@ -91,7 +97,7 @@ getTestStrR jMa str = do
                    in 
                    case gr of 
                    Nothing -> return $ TypedContent typePlain $ toContent $ Text.pack "3"
-                   Just y -> return $ TypedContent typePlain $ toContent $ Text.pack "0"
+                   Just y -> return $ TypedContent typePlain $ toContent $ executeAut y str
     
 
 

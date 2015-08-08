@@ -9,7 +9,8 @@ html,body { height: 100%; margin: 0px; }
 </style></head><body><script src="elm.js"></script>
 <script type ="text/javascript">
 
-var runningElmModule = Elm.fullscreen(Elm.Renderer);
+
+var runningElmModule = Elm.fullscreen(Elm.Renderer,{upld:""});
 
 function httpGet(url){
     var xmlHttp = new XMLHttpRequest();
@@ -17,28 +18,55 @@ function httpGet(url){
     xmlHttp.send( null );
     return xmlHttp.responseText;
 }
+
 function download(str){
   window.location = 'http://localhost:3000/download/'+str;
 }
 function testString(val){
   var url = 'http://localhost:3000/testStr/'+val[1]+'/'+val[0]
-  /
-     res = httpGet(url)
-     DO STUFF IF IT WORKS
-  /
-}   
+  
+    //res = httpGet(url)
+    // DO STUFF IF IT WORKS
+  
+} 
 function testRegular(val){
   var url = 'http://localhost:3000/testRe/'+val[1]+'/'+val[0]
-  /
-     res = httpGet(url)
-     REFER TO ABOVE IF YOU WANT
-  /
-}                                 
-                                                                                    
+ 
+    // res = httpGet(url)
+    // REFER TO ABOVE IF YOU WANT
+  
+}                             
+var first = true
+
+function resUpload(res){
+	if (first){
+		first = false
+		return
+	}
+	else{
+		if(~res){
+			alert("File could not be parsed. Bummer")
+		}
+	}
+  
+}
+
+function handleFileSelect(evt){
+	var files = evt.target.files
+	f = files[0]
+	var reader = new FileReader()
+	reader.onload = function(e){
+		runningElmModule.ports.upld.send(e.target.result)
+	}
+	reader.readAsText(f)
+}
+
 runningElmModule.ports.conn.subscribe(download)
 
 runningElmModule.ports.tStr.subscribe(testString)
 runningElmModule.ports.tRe.subscribe(testRegular)
+runningElmModule.ports.resUpJ.subscribe(resUpload)
+document.getElementById('files').addEventListener('change', handleFileSelect, false);
 
 
 </script></body>

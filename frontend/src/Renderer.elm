@@ -2,7 +2,7 @@ module Renderer where
 import Signal exposing(..)
 import Graphics.Element exposing (..)
 import Graphics.Collage exposing(..)
-import World exposing(runner,rad)
+import World exposing(updateC,rad)
 import Common exposing (Node,Edge)
 import UI exposing(..)
 import Mouse exposing(..)
@@ -11,44 +11,20 @@ import List
 import Window exposing(dimensions)
 import EdgeHelper exposing(genEdge)
 import Text exposing(fromString)
-
+import JsonHandler exposing(..)
 
 import Task exposing (..)
-import Json.Encode exposing(..)
 
 
-
-
+--Ports and Corresponding Signals
 
 
 
 saveSig = Signal.sampleOn saveButt.signal runner
 
-encodeNode n = object
-               [ ("name", string n.name)
-               , ("start", bool n.start)
-               , ("final", bool n.fin)
-               ]
-conTL (a,b)= list [string a, string b] 
-convTok ls = list (List.map (\x-> string x) ls)
-encodeEdge e = object
-             [ ("route",  conTL e.route )
-             , ("token",  convTok e.token)
-             ]
-
-encodeGraph (nodes,edges) =
-  let nl =  List.map encodeNode nodes |> list
-      ne =  List.map encodeEdge edges |> list
-      gr = object [ ("nodes",nl),("edges",ne)]
-  in encode 0 gr 
-
-
-
 port conn: Signal String
 port conn = Signal.map encodeGraph saveSig
 
-helpy = Signal.map encodeGraph runner
-helpy2 = Signal.map2 (\a b ->(a,b)) 
 getSig t = let helpy = Signal.map encodeGraph runner 
                h2 = Signal.map2 (\a b ->(a,b)) t
                bs = Signal.sampleOn t
@@ -62,6 +38,24 @@ port tRe: Signal (String,String)
 port tRe = getSig testReSig
 
 
+                                
+
+--Javascript gives elm the text description of the automata
+port upld: Signal String
+--Elm  tells Javascript if file could be parsed
+port resUpJ: Signal Bool
+port resUpJ = Signal.map  (\(a,b,c)->c) resUpload
+
+--Parses contents of file into an automata if possible
+resUpload = Signal.map (\x->(decodeGraph x)) upld
+
+--Model
+
+mMySig = Signal.merge mySig (Signal.map (\x->NewWorld x)resUpload)
+runner = Signal.foldp updateC ([],[]) mMySig
+
+
+
 scene (w,h) locs edges =
     let drawText node =  let (x,y) = node.coord in 
     fromString (node.name)   
@@ -72,7 +66,6 @@ scene (w,h) locs edges =
     circle rad
     |> filled (blue)
     |> move (toFloat x - toFloat w / 2, toFloat h / 2 - toFloat y)
-   -- |> rotate (toFloat x)
     in
     let finS = List.filter (\el ->el.fin) locs in
     let drawFin node = let (x,y) = node.coord in
@@ -101,8 +94,8 @@ render (state,ed) ls1 ls2 ls3 (w,h) =
     let g1    = helper buttons ls1 in
     let g2    = helper buttons2 ls2 in
     let g3    = helper buttons3 ls3 in
-    let g4    = buttons4 in
-    let cont  = flow right ([g1]++[g2]++[g3]++g4) in
+    let g4    = flow down buttons4 in
+    let cont  = flow right ([g1]++[g2]++[g3]++[g4]) in
     flow  down ([cen]++[cont])
 
 

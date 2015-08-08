@@ -1,4 +1,4 @@
-module World(runner,rad)  where
+module World(updateC,rad)  where
 import Common exposing(Node,Edge)
 import UI exposing(..)
 import Signal exposing(..) 
@@ -107,10 +107,10 @@ updateC action (state,ed) =
          SetStart v -> (setStart state v ,ed) 
          SetFinal v -> (setFin True state v,ed)
          RemFinal v -> (setFin False state v,ed)
+         NewWorld (nd,ned,f) -> if f then (nd,ed) else (state,ned)
                                                                 
 
 
 
 init = ([],[])
 
-runner = foldp updateC ([],[]) mySig
