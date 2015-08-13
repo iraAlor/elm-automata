@@ -33,5 +33,4 @@ cov = button [style bls] [a [href "javascript: void(0)"][] ]
 upButt =  Html.toElement 0 0 (div [ ] [inp,out]) 
 
 
-Test backend i.e. test string
-Implement regular expression comparison
+Test backend i.e. test string re validation

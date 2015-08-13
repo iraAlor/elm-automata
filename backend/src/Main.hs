@@ -22,6 +22,8 @@ import Data.Text.Encoding as Text
 import Data.Aeson 
 import Data.Aeson.TH 
 import Data.Aeson.Types
+import Re as Re
+
 data App = App
 
 data Node = Node { name:: Text
@@ -53,7 +55,6 @@ mkYesod "App" [parseRoutes|
 |]
 
 
-
 getHomeR = do
   s <-liftIO $ readFile "temp.html"
   let ts = Text.pack s
@@ -63,9 +64,6 @@ getElmR = do
   let ts = Text.pack s
   return $ TypedContent typeJavascript $ toContent ts
 
-getTestReR jMa re = do
-    addHeader "Content-Disposition" "attachment; filename=\"auto\"" 
-    return $ TypedContent typeJson $ toContent $ jMa
 
 transEdge x = let ((a,b),tkn) = (route x,token x)
               in
@@ -100,6 +98,15 @@ getTestStrR jMa str = do
                    Just y -> return $ TypedContent typePlain $ toContent $ executeAut y str
     
 
+getTestReR re dmac = do
+  let graph = Data.Aeson.decode ( Why.pack $ List.map c2w $ Text.unpack dmac)
+  case graph of
+       Nothing -> return $ TypedContent typePlain $ toContent $ Text.pack "-1"
+       Just x -> let mac = convertMac x
+                 in
+                 case mac of
+                 Nothing -> return $ TypedContent typePlain $ toContent$ Text.pack "-2"
+                 Just y -> return $ TypedContent typePlain $ toContent $ Re.processRe (Text.unpack re) y
 
 getDownloadR a = do
     addHeader "Content-Disposition" "attachment; filename=\"auto\"" 
