@@ -1,7 +1,9 @@
-.PHONY:build
+.PHONY:build clean
 build:
 	ghc Main.hs Re.hs -o backasourusRex
 	mv  backasourusRex ../../build/bend
-	rm *.dyn_*
-	rm *.o
-	rm *.hi
+	$(MAKE) clean
+clean:
+	rm -f *.dyn_*
+	rm -f *.o
+	rm -f *.hi

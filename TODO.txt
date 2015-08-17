@@ -1,4 +1,3 @@
-Deal with self edges
 Improve edges
 Improve layout
 Improve size

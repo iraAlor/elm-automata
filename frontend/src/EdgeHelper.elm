@@ -24,6 +24,9 @@ getPath (xs,ys) (xe,ye) a b  (d1,d2) mv =  let (x,y) = (toFloat (xe-xs),toFloat 
 sel (a,b) = if a<b then (0,round(0.5*rad),degrees 0,0.125*rad) else (0,round(-0.5*rad),degrees 180,-0.875*rad)
 
 
+
+
+
 genEdge nodes (w,h) edge= let (start,end) = edge.route in
                           let helps n (a,b)= (if n.name == start then n else a,if n.name == end then n else b) in
                           let (sNode,eNode) = List.foldl helps (def,def) nodes in
@@ -37,7 +40,30 @@ genEdge nodes (w,h) edge= let (start,end) = edge.route in
                           let tri = ngon 3 10
                                     |>filled red
                                     |>move(a-toFloat w/2,(toFloat h/2)-(b)) 
-                                    |>rotate (-th) in
-                          collage w h [pt,txt,tri]
+                                    |>rotate (-th) 
+                          in
+                          if start==end then collage w h [pt,txt,tri] else selfE sNode (w,h) edge
 
-                       
+
+--circle eq r^2 =(x-k)^2+(y-h)^2
+--r = -sqrt((x-k)^2=(y-h)^2)
+selfE node (w,h) edge  = let (x,y) = node.coord|>(\(a,b)->(toFloat a,toFloat b))
+                             delt  = (1.5*rad)
+                             p0= List.map (\x->degrees (toFloat x)) [-45 .. 45]
+                             p1 = List.map (\x->(delt*(cos x),delt*(sin x)) ) p0
+                             p2 = (0,0)::p1++[(0,0)]|>List.map (\(a,b)->(a+x,b+y)) 
+                             p3 = List.map (\(a,b)->(a-toFloat w/2,(toFloat h/2)-b)) p2
+                             (mx,my) = (x-toFloat w/2,(toFloat h/2)-(y+delt))
+                             txt = Graphics.Collage.text (fromString (toString (edge.token)))
+                                  |> move (mx,my+10)
+                             pt = path p3|>traced {defaultLine | width<-5}
+                             tri = ngon 3 10
+                                  |>filled red
+                                  |>move (mx,my)
+                                  |>rotate (degrees -90.0)
+                             in
+                             collage w h [pt,txt,tri]
+
+                             
+
+
